@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+	--doc-height: 100dvh;
+	--font-face-googlesans: 'Google Sans', sans-serif;
+}
+
+html,
+body,
+#__next {
+	@apply bg-blue-primary font-sans text-gray-50 antialiased;
+	height: var(--doc-height);
+	scroll-behavior: smooth;
+	font-family: var(--font-face-googlesans);
+}
+
+@keyframes bounce-horizontal {
+	0%,
+	100% {
+		transform: translatex(-25%);
+		animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+	}
+	50% {
+		transform: none;
+		animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+	}
+}
+.animate-bounce-horizontal {
+	animation: bounce-horizontal 1s infinite;
+}

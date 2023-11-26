@@ -15,5 +15,44 @@ model Unit {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name String @unique
+  name    String   @unique
+  lessons Lesson[]
+}
+
+model Lesson {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String
+  words Word[]
+
+  unit   Unit   @relation(fields: [unitId], references: [id])
+  unitId String
+
+  @@unique([unitId, name])
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String @unique
+  words Word[]
+}
+
+model Word {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  text   String
+  imgSrc String
+
+  lesson   Lesson @relation(fields: [lessonId], references: [id])
+  lessonId String
+
+  tag   Tag    @relation(fields: [tagId], references: [id])
+  tagId String
 }

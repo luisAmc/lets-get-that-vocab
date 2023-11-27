@@ -1,11 +1,11 @@
 import { AnswerCounters } from './AnswerCounters';
 import { AnswerStatus } from './AnswerStatus';
-import { Header } from '../Header';
-import { PrivacyScreen } from '../PrivacyScreen';
+import { Header } from '../shared/Header';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
 // import { Question } from './Question';
 import { QuestionSetProvider, useQuestionSet } from './QuestionSetContext';
 import { Resume } from './Resume';
-import { Page } from '../Page';
+import { Page } from '../shared/Page';
 import { Question } from './Question';
 import { generateQuestionSet } from '~/utils/generateQuestionSet';
 

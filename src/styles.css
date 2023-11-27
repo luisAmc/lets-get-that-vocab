@@ -4,7 +4,7 @@
 
 :root {
 	--doc-height: 100dvh;
-	--font-face-googlesans: 'Google Sans', sans-serif;
+	/* --font-face-googlesans: 'Google Sans', sans-serif; */
 }
 
 html,
@@ -13,7 +13,7 @@ body,
 	@apply bg-blue-primary font-sans text-gray-50 antialiased;
 	height: var(--doc-height);
 	scroll-behavior: smooth;
-	font-family: var(--font-face-googlesans);
+	/* font-family: var(--font-face-googlesans); */
 }
 
 @keyframes bounce-horizontal {

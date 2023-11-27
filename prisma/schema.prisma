@@ -19,13 +19,21 @@ model Unit {
   lessons Lesson[]
 }
 
+enum QuestionType {
+  SELECT_IMAGE
+  SELECT_NAME
+  SELECT_PHRASE
+  INPUT_NAME
+}
+
 model Lesson {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name  String
-  words Word[]
+  name                   String
+  words                  Word[]
+  availableQuestionTypes QuestionType[]
 
   unit   Unit   @relation(fields: [unitId], references: [id])
   unitId String

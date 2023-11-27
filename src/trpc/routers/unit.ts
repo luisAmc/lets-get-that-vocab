@@ -2,8 +2,16 @@ import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
 
 export const unitRouter = createTRPCRouter({
-	getAll: publicProcedure.query(({ ctx }) => {
-		return ctx.db.unit.findMany({});
+	getAll: publicProcedure.query(async ({ ctx }) => {
+		// await new Promise((resolve) => setTimeout(resolve, 3000));
+
+		return ctx.db.unit.findMany({
+			select: {
+				id: true,
+				name: true,
+				lessons: { select: { id: true, name: true } },
+			},
+		});
 	}),
 
 	create: publicProcedure

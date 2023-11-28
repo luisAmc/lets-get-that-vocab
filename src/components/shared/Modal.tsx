@@ -18,7 +18,7 @@ export function useModal() {
 	};
 }
 
-interface ModalProps {
+export interface ModalProps {
 	title: string;
 	open: boolean;
 	onClose(): void;

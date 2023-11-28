@@ -1,15 +1,17 @@
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { QuestionType } from '~/utils/generateQuestionSet';
+import { RouterOutputs } from '~/utils/api';
+
+type QuestionObject = RouterOutputs['lesson']['getQuestionSet'][number];
 
 interface QuestionSetContextType {
 	currentQuestionIndex: number;
-	questions: Array<QuestionType>;
+	questions: Array<QuestionObject>;
 	answers: Array<number>;
 	questionCount: number;
 	answerCount: number;
 	correctAnswerCount: number;
 	incorrectAnswerCount: number;
-	getCurrentQuestion(): QuestionType;
+	getCurrentQuestion(): QuestionObject;
 	answerQuestion(isCorrect: boolean): void;
 	goToNextQuestion(): void;
 }
@@ -19,7 +21,7 @@ const QuestionSetContext = createContext<QuestionSetContextType | undefined>(
 );
 
 interface QuestionSetProviderProps {
-	questions: Array<QuestionType>;
+	questions: Array<QuestionObject>;
 	children: ReactNode;
 }
 

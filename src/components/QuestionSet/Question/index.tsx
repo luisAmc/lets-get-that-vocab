@@ -1,21 +1,21 @@
-import { useQuestionSet } from '../QuestionSetContext';
-import { type QUESTION_TYPE } from '../../../utils/generateQuestionSet';
-import { GuessName } from './GuessName';
-import { ReactNode } from 'react';
 import { GuessImage } from './GuessImage';
+import { GuessName } from './GuessName';
 import { InputName } from './InputName';
+import { QuestionType } from '@prisma/client';
+import { ReactNode } from 'react';
+import { useQuestionSet } from '../QuestionSetContext';
 
-const QuestionComponent: Record<QUESTION_TYPE, ReactNode> = {
-    GUESS_NAME_A: <GuessName />,
-    GUESS_NAME_B: <GuessName />,
-    GUESS_IMAGE: <GuessImage />,
-    INPUT_NAME: <InputName />,
+const QuestionComponent: Record<QuestionType, ReactNode> = {
+	SELECT_NAME: <GuessName />,
+	SELECT_IMAGE: <GuessImage />,
+	SELECT_PHRASE: null,
+	INPUT_NAME: <InputName />,
 };
 
 export function Question() {
-    const { getCurrentQuestion } = useQuestionSet();
+	const { getCurrentQuestion } = useQuestionSet();
 
-    const question = getCurrentQuestion();
+	const question = getCurrentQuestion();
 
-    return QuestionComponent[question.type];
+	return QuestionComponent[question.type as QuestionType];
 }

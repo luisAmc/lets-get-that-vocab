@@ -9,6 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { CreateWordForm } from './CreateWordForm';
 import Link from 'next/link';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function Lesson() {
 	const router = useRouter();
@@ -68,6 +69,8 @@ export function Lesson() {
 			) : (
 				<span>No hay una lección con este ID.</span>
 			)}
+
+			<PrivacyScreen />
 		</Page>
 	);
 }

@@ -3,6 +3,7 @@ import { Page } from '../shared/Page';
 import { CreateUnitForm } from './CreateUnitForm';
 import { Unit } from './Unit';
 import { Loading } from '../shared/Loading';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function WordCreation() {
 	const { data, isLoading } = api.unit.getAll.useQuery();
@@ -26,6 +27,8 @@ export function WordCreation() {
 					<CreateUnitForm />
 				</section>
 			)}
+
+			<PrivacyScreen />
 		</Page>
 	);
 }

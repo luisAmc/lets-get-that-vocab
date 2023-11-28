@@ -4,6 +4,7 @@ import { Page } from '../shared/Page';
 import { Button } from '../shared/Button';
 import { ChevronLeftIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function Word() {
 	const router = useRouter();
@@ -55,6 +56,8 @@ export function Word() {
 			) : (
 				<span>No hay una palabra con este ID.</span>
 			)}
+
+			<PrivacyScreen />
 		</Page>
 	);
 }

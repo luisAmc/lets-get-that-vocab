@@ -40,4 +40,70 @@ export const lessonRouter = createTRPCRouter({
 				},
 			});
 		}),
+
+	getQuestionSet: publicProcedure
+		.input(
+			z.object({
+				lessonId: z.string().min(1),
+				questionSetSize: z.number().int().positive(),
+				questionTypes: z.string().min(1),
+			}),
+		)
+		.query(async ({ ctx, input }) => {
+			const wordsInOrder = await ctx.db.word.findMany({
+				where: { lessonId: input.lessonId },
+				select: {
+					id: true,
+					text: true,
+					imgSrc: true,
+				},
+			});
+
+			let shuffledWords = shuffle(wordsInOrder);
+
+			const selectedWords = shuffledWords.slice(0, input.questionSetSize);
+
+			const plausibleQuestionTypes = input.questionTypes
+				.split(',')
+				.map((type) => fieldNameToQuestionType[type]);
+
+			const questions = selectedWords.map((word) => {
+				shuffledWords = shuffle(shuffledWords);
+
+				const randomIndex = Math.max(
+					Math.round(Math.random() * plausibleQuestionTypes.length - 1),
+					0,
+				);
+
+				const questionType = plausibleQuestionTypes[randomIndex];
+
+				let plausibleAnswers: Array<string> = [];
+				let answer = word.text;
+
+				if (questionType === QuestionType.SELECT_NAME) {
+					plausibleAnswers = shuffle([
+						word.text,
+						...shuffledWords
+							.filter((shuffledWord) => shuffledWord !== word)
+							.slice(0, 2)
+							.map((shuffledWord) => shuffledWord.text),
+					]);
+				}
+
+				return { word, type: questionType, plausibleAnswers, answer };
+			});
+
+			return questions;
+		}),
 });
+
+function shuffle<T>(array: Array<T>) {
+	return array.sort(() => Math.random() - 0.5);
+}
+
+const fieldNameToQuestionType: Record<string, QuestionType> = {
+	selectName: QuestionType.SELECT_NAME,
+	selectImage: QuestionType.SELECT_IMAGE,
+	selectPhrase: QuestionType.SELECT_PHRASE,
+	inputName: QuestionType.INPUT_NAME,
+} as const;

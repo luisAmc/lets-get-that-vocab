@@ -39,7 +39,6 @@ export function InputName({ questionIndex }: InputNameProps) {
 	const [showAnswer, setShowAnswer] = useState(false);
 
 	function handleVerifyClick() {
-		console.log({ nameEntered });
 		setShowAnswer(true);
 	}
 

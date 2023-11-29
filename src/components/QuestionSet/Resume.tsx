@@ -29,7 +29,7 @@ export function Resume() {
 					</thead>
 
 					<tbody className="divide-y divide-gray-200">
-						{[...questions, ...questions, ...questions, ...questions, ...questions, ...questions].map((question, questionIndex) => (
+						{questions.map((question, questionIndex) => (
 							<tr key={`resume-row-${questionIndex}`}>
 								<td className="py-21.5pl-4 text-center text-sm text-gray-500">
 									{questionIndex + 1}

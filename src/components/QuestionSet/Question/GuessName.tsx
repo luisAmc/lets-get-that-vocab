@@ -47,7 +47,7 @@ export function GuessName() {
 
 	return (
 		<section className="flex h-full flex-1 flex-col gap-y-4 pt-2">
-			<div className="flex items-center justify-between">
+			<div className='flex items-center justify-between'>
 				<h1 className="text-lg font-medium">¿Cómo se llama esto?</h1>
 
 				<Pill>{question.word.tag.name}</Pill>

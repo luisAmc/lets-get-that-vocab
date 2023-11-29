@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useQuestionSet } from './QuestionSetContext';
 
 export function AnswerProgress() {
@@ -14,10 +13,6 @@ export function AnswerProgress() {
 		(incorrectAnswerCount / questionCount) *
 		100
 	).toFixed(0);
-
-	useEffect(() => {
-		console.log({ correctAnswerCount, incorrectAnswerCount, questionCount });
-	}, [correctAnswerCount, incorrectAnswerCount, questionCount]);
 
 	return (
 		<div>

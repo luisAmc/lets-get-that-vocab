@@ -17,15 +17,17 @@ export function Resume() {
 			<div className="space-y-2 px-4 text-xl">
 				<table className="w-full divide-y divide-gray-300">
 					<thead>
-						<th className="py-2.5 pl-4 pr-3 text-sm font-semibold text-gray-600">
-							#
-						</th>
-						<th className="px-3 py-2.5 text-left text-sm font-semibold text-gray-600">
-							Palabra / Frase
-						</th>
-						<th className="py-2.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-600">
-							Respuesta
-						</th>
+						<tr>
+							<th className="py-2.5 pl-4 pr-3 text-sm font-semibold text-gray-600">
+								#
+							</th>
+							<th className="px-3 py-2.5 text-left text-sm font-semibold text-gray-600">
+								Palabra / Frase
+							</th>
+							<th className="py-2.5 pl-3 pr-4 text-left text-sm font-semibold text-gray-600">
+								Respuesta
+							</th>
+						</tr>
 					</thead>
 
 					<tbody className="divide-y divide-gray-200">

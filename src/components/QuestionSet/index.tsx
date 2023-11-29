@@ -11,14 +11,19 @@ import { AnswerProgress } from './AnswerProgress';
 
 export function QuestionSet() {
 	const router = useRouter();
+	const [lessonId, questionTypes, questionSetSize] = [
+		router.query.lessonId as string,
+		router.query.questionTypes as string,
+		parseInt(router.query.questionSetSize as string, 10),
+	];
 
 	const { data } = api.lesson.getQuestionSet.useQuery(
+		{ lessonId, questionTypes, questionSetSize },
 		{
-			lessonId: router.query.lessonId as string,
-			questionTypes: router.query.questionTypes as string,
-			questionSetSize: parseInt(router.query.questionSetSize as string, 10),
+			enabled:
+				router.isReady && !!lessonId && !!questionTypes && !!questionSetSize,
+			refetchOnWindowFocus: false,
 		},
-		{ refetchOnWindowFocus: false },
 	);
 
 	const questions = data ?? [];

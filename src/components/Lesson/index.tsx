@@ -5,7 +5,6 @@ import { Button } from '../shared/Button';
 import { ChevronLeftIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import { Disclosure } from '@headlessui/react';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
-import { Loading } from '../shared/Loading';
 
 export function Lesson() {
 	const router = useRouter();
@@ -18,7 +17,7 @@ export function Lesson() {
 
 	return (
 		<Page>
-			{isLoading && <Loading />}
+			{isLoading && <Skeleton />}
 
 			{data && (
 				<article className="flex w-full flex-col gap-y-4 rounded-xl border border-brand-200 bg-white p-4">
@@ -78,5 +77,44 @@ export function Lesson() {
 
 			<PrivacyScreen />
 		</Page>
+	);
+}
+
+function Skeleton() {
+	return (
+		<div className="animate-pulse space-y-4 rounded-xl border border-brand-200 bg-white p-4">
+			<div className="flex space-x-2">
+				<div className="h-10 w-10 rounded-full bg-brand-100"></div>
+				<div className="h-10 w-1/2 rounded-lg bg-brand-100"></div>
+			</div>
+
+			<div className="flex flex-col space-y-2">
+				<div className="flex items-center justify-between">
+					<div className="h-6 w-1/3 rounded-lg bg-brand-100"></div>
+					<div className="h-6 w-1/6 rounded-lg bg-brand-100"></div>
+				</div>
+
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-1/2 rounded-lg bg-brand-100"></div>
+					<div className="h-8 w-1/12 rounded-lg bg-brand-100"></div>
+				</div>
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-1/2 rounded-lg bg-brand-100"></div>
+					<div className="h-8 w-1/12 rounded-lg bg-brand-100"></div>
+				</div>
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-1/2 rounded-lg bg-brand-100"></div>
+					<div className="h-8 w-1/12 rounded-lg bg-brand-100"></div>
+				</div>
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-1/2 rounded-lg bg-brand-100"></div>
+					<div className="h-8 w-1/12 rounded-lg bg-brand-100"></div>
+				</div>
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-1/2 rounded-lg bg-brand-100"></div>
+					<div className="h-8 w-1/12 rounded-lg bg-brand-100"></div>
+				</div>
+			</div>
+		</div>
 	);
 }

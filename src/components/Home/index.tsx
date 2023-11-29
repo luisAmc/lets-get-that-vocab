@@ -2,7 +2,6 @@ import { api } from '~/utils/api';
 import { cn } from '~/utils/cn';
 import { Header } from '../shared/Header';
 import { LessonOptionsModal, LessonType } from './LessonOptionsModal';
-import { Loading } from '../shared/Loading';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { useModal } from '../shared/Modal';
@@ -58,7 +57,7 @@ export function Home() {
 
 	return (
 		<Page>
-			{isLoading && <Loading />}
+			{isLoading && <Skeleton />}
 
 			{!isLoading && data && (
 				<>
@@ -137,5 +136,25 @@ export function Home() {
 
 			<PrivacyScreen />
 		</Page>
+	);
+}
+
+function Skeleton() {
+	return (
+		<div className="flex animate-pulse flex-col overflow-hidden rounded-xl bg-brand-100">
+			<div className="h-20 rounded-xl bg-brand-200"></div>
+
+			<div className="flex flex-col items-center space-y-4 p-4">
+				<div className="h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+
+				<div className="-ml-[100px] h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+
+				<div className="h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+
+				<div className="ml-[100px] h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+
+				<div className="h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+			</div>
+		</div>
 	);
 }

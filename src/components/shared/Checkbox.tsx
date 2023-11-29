@@ -11,10 +11,10 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 		return (
 			<label
 				htmlFor={props.name}
-				className="flex cursor-pointer items-center gap-x-6 rounded-lg border bg-white px-6 py-4 shadow-sm hover:bg-gray-100 focus:outline-none"
+				className="flex cursor-pointer items-center gap-x-6 rounded-lg border bg-white px-6 py-4 shadow-sm hover:bg-brand-100 focus:outline-none"
 			>
 				<div className="flex flex-1 flex-col text-sm">
-					<div className="text-gray-90 font-medium">{label}</div>
+					<div className="text-brand-90 font-medium">{label}</div>
 
 					<div className="text-gray-500">{description}</div>
 				</div>

@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { useQuestionSet } from './QuestionSetContext';
+import { Button } from '../shared/Button';
 
 export function Resume() {
 	const { questions, answers } = useQuestionSet();
@@ -24,14 +24,9 @@ export function Resume() {
 			</div>
 
 			<div className="flex flex-1 items-end justify-center">
-				<Link href="/">
-					<button
-						type="button"
-						className="rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 px-5 py-4 text-2xl font-medium shadow-md transition-opacity hover:opacity-75"
-					>
-						¿Volver al incio?
-					</button>
-				</Link>
+				<Button href="/" size="xl" className="w-full">
+					Regresar al inicio
+				</Button>
 			</div>
 		</div>
 	);

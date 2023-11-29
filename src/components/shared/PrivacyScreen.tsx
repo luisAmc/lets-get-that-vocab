@@ -5,7 +5,7 @@ export function PrivacyScreen() {
 
 	return (
 		<motion.div
-			className="bg-yellow-primary fixed inset-0 z-50"
+			className="bg-brand-600 fixed inset-0 z-50"
 			initial={{ scaleX: 1 }}
 			animate={{
 				scaleX: 0,

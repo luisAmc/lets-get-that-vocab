@@ -13,8 +13,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-// 10MB
-export const MAX_FILE_SIZE = 1 * 1000 * 1000 * 10;
+export const MAX_FILE_SIZE = 1 * 1000 * 1000 * 10; // 10MB
 
 export const ACCEPTED_IMAGE_TYPES = [
 	'image/jpeg',
@@ -63,7 +62,7 @@ export function Dropzone({ multiple = false, disabled = false }: Props) {
 	return (
 		<div>
 			<div
-				className="grid h-64 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-gray-300 hover:bg-gray-100"
+				className="border-brand-300 hover:bg-brand-100 grid h-64 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed"
 				{...dropzone.getRootProps()}
 			>
 				<input {...dropzone.getInputProps()} disabled={disabled} />
@@ -77,9 +76,9 @@ export function Dropzone({ multiple = false, disabled = false }: Props) {
 				) : (
 					<>
 						{dropzone.isDragActive ? (
-							<p className="text-xs text-gray-500">Suelte la imagen aquí...</p>
+							<p className="text-brand-500 text-xs">Suelte la imagen aquí...</p>
 						) : (
-							<div className="flex flex-col items-center justify-center p-6 text-gray-500">
+							<div className="text-brand-500 flex flex-col items-center justify-center p-6">
 								<CloudArrowUpIcon className="h-8 w-8" />
 
 								<p className="mb-2 text-xs">

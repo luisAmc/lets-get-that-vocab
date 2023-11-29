@@ -1,4 +1,3 @@
-import { Button } from '../shared/Button';
 import { Checkbox } from '../shared/Checkbox';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { FieldError, Form, useZodForm } from '../shared/Form';
@@ -42,7 +41,7 @@ export function LessonOptionsModal({
 					.positive('Tiene que ser un número positivo.')
 					.max(
 						lesson._count.words,
-						`La cantidad maxima de preguntas es la misma a la cantidad de palabras.`,
+						`En esta lección la cantidad máxima es ${lesson._count.words}.`,
 					),
 				selectImage: z.boolean().optional(),
 				selectName: z.boolean().optional(),
@@ -100,11 +99,11 @@ export function LessonOptionsModal({
 					}}
 				>
 					<label>
-						<div className="mb-2 text-sm font-medium leading-none text-gray-800">
+						<div className="mb-2 text-sm font-medium leading-none text-brand-800">
 							Cantidad de preguntas
 						</div>
 
-						<div className="flex items-center gap-x-2 rounded-lg bg-gray-300 pr-4">
+						<div className="mb-2 flex items-center gap-x-2 rounded-lg bg-brand-300 pr-4">
 							<input
 								{...form.register('questionSetSize', { valueAsNumber: true })}
 								className={inputVariants({ className: 'flex-1' })}
@@ -114,10 +113,10 @@ export function LessonOptionsModal({
 								}
 							/>
 
-							<span className="flex-0 flex items-center gap-x-1 text-sm">
+							<span className="flex items-center gap-x-1 text-xs font-medium">
 								<span>de</span>
 								<span>{lesson._count.words}</span>
-								<span>palabras</span>
+								<span>preguntas posibles</span>
 							</span>
 						</div>
 
@@ -125,7 +124,7 @@ export function LessonOptionsModal({
 					</label>
 
 					<section>
-						<p className="mb-2 text-sm font-medium leading-none text-gray-800">
+						<p className="mb-2 text-sm font-medium leading-none text-brand-800">
 							¿Con qué tipos de preguntas quieres practicar?
 						</p>
 
@@ -142,7 +141,7 @@ export function LessonOptionsModal({
 								<Checkbox
 									{...form.register('selectName')}
 									label="Seleccionar nombre"
-									description="Se presenta una imagen y tres palabras, el usuario selecciona la palabra que corresponda al nombre de la imagen"
+									description="Se presenta una imagen y tres palabras, tienes la palabra que corresponda al nombre o situación de la imagen"
 								/>
 							)}
 

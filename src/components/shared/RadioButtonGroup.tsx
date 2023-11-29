@@ -18,11 +18,13 @@ export function RadioButtonGroup({
 	label,
 	options,
 }: RadioButtonGroupProps) {
-	const { field : {value, onChange} } = useController({ name });
+	const {
+		field: { value, onChange },
+	} = useController({ name });
 
 	return (
 		<label>
-			<div className="mb-1 font-medium text-stone-800">{label}</div>
+			<div className="text-brand-800 mb-1 font-medium">{label}</div>
 
 			<RadioGroup value={value} onChange={onChange}>
 				<div className="">
@@ -34,7 +36,7 @@ export function RadioButtonGroup({
 								cn(
 									optionIndex === 0 && 'rounded-t-md',
 									optionIndex === options.length - 1 && 'rounded-b-md border-b',
-									checked ? 'border-sky-200 bg-sky-50' : 'border-gray-200',
+									checked ? 'border-brand-200 bg-brand-50' : 'border-brand-200',
 									'cursor-pointer border-x border-t p-4 focus:outline-none ',
 								)
 							}
@@ -45,8 +47,8 @@ export function RadioButtonGroup({
 										<span
 											className={cn(
 												checked
-													? 'border-transparent bg-sky-600'
-													: 'border-sky-300 bg-white',
+													? 'bg-brand-600 border-transparent'
+													: 'border-brand-300 bg-white',
 												active && 'ring-offset-600 ring-2 ring-offset-2',
 												'grid h-4 w-4 place-items-center rounded-full border',
 											)}
@@ -55,10 +57,7 @@ export function RadioButtonGroup({
 										</span>
 
 										<RadioGroup.Label
-											className={cn(
-												checked ? 'text-sky-900' : 'text-gray-900',
-												'ml-3 font-medium',
-											)}
+											className={cn(checked && 'font-medium', 'ml-3 ')}
 										>
 											{option.label}
 										</RadioGroup.Label>

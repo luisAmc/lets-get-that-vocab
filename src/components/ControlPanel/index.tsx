@@ -19,7 +19,7 @@ export function WordCreation() {
 					{units.length > 0 ? (
 						units.map((unit) => <Unit key={unit.id} unit={unit} />)
 					) : (
-						<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-gray-600">
+						<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
 							No se han creado unidades todavía.
 						</div>
 					)}

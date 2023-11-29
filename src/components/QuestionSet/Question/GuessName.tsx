@@ -7,6 +7,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { cn } from '../../../utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Button } from '~/components/shared/Button';
 
 export function GuessName() {
 	const {
@@ -44,7 +45,7 @@ export function GuessName() {
 	const isAnswer = selectedOption === question.answer;
 
 	return (
-		<section className="flex flex-1 flex-col gap-y-4">
+		<section className="flex h-full flex-1 flex-col gap-y-4">
 			<h1 className="text-center text-3xl">¿Cómo se llama esto?</h1>
 
 			<div className="relative overflow-hidden rounded-xl">
@@ -88,9 +89,11 @@ export function GuessName() {
 					<button
 						key={`option-${option}`}
 						type="button"
+						disabled={showAnswer}
 						className={cn(
-							'w-full rounded-xl border-[0.2rem] border-transparent bg-gray-50 px-2 py-3 text-2xl text-gray-900 shadow-md transition-[opacity,_colors] hover:opacity-70',
-							option === selectedOption && 'border-gray-300 bg-yellow-primary',
+							'w-full rounded-xl border-2 border-transparent bg-brand-50 px-2 py-3 text-2xl text-brand-900 shadow-md transition-[opacity,_colors] hover:bg-brand-300',
+							option === selectedOption &&
+								'border-brand-600 bg-brand-300 font-semibold ring-2 ring-brand-600',
 							showAnswer &&
 								(question.answer === option
 									? 'bg-green-500 font-bold text-green-800'
@@ -103,14 +106,18 @@ export function GuessName() {
 				))}
 			</div>
 
-			{!showAnswer && (
-				<VerifyButton
-					isOptionSelected={Boolean(selectedOption)}
-					onClick={handleVerifyClick}
-				/>
-			)}
+			<div className="flex-1"></div>
 
-			{showAnswer && <ContinueButton onClick={handleContinueClick} />}
+			<div className="flex flex-col">
+				{!showAnswer && (
+					<VerifyButton
+						isOptionSelected={Boolean(selectedOption)}
+						onClick={handleVerifyClick}
+					/>
+				)}
+
+				{showAnswer && <ContinueButton onClick={handleContinueClick} />}
+			</div>
 		</section>
 	);
 }
@@ -121,16 +128,15 @@ interface ContinueButtonProps {
 
 function ContinueButton({ onClick }: ContinueButtonProps) {
 	return (
-		<button
-			type="button"
-			className={cn(
-				'flex h-14 items-center justify-between gap-x-2 rounded-xl bg-gray-100 px-4 py-3 text-lg font-medium text-gray-500 transition-opacity ease-in hover:opacity-75',
-			)}
+		<Button
+			size="xl"
+			variant="secondary"
+			className="flex items-center justify-between"
 			onClick={onClick}
 		>
 			<span>Siguiente</span>
 			<ArrowRightIcon className="animate-bounce-horizontal h-6 w-6" />
-		</button>
+		</Button>
 	);
 }
 
@@ -141,17 +147,15 @@ interface VerifyButtonProps {
 
 function VerifyButton({ isOptionSelected, onClick }: VerifyButtonProps) {
 	return (
-		<button
-			type="button"
-			onClick={onClick}
-			disabled={!isOptionSelected}
-			className={cn(
-				'h-14 rounded-xl bg-gray-300 px-4 py-3 text-xl font-medium text-gray-400 shadow-sm transition-opacity hover:opacity-80',
-				!isOptionSelected && 'cursor-not-allowed hover:opacity-100',
-				isOptionSelected && 'bg-green-200 text-green-600',
-			)}
-		>
-			<span>{isOptionSelected ? 'Verificar' : 'Seleccione una opción'}</span>
-		</button>
+		<>
+			<Button
+				size="xl"
+				variant={isOptionSelected ? 'positive' : 'secondary'}
+				onClick={onClick}
+				disabled={!isOptionSelected}
+			>
+				<span>{isOptionSelected ? 'Verificar' : 'Seleccione una opción'}</span>
+			</Button>
+		</>
 	);
 }

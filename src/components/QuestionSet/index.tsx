@@ -8,6 +8,7 @@ import { QuestionSetProvider, useQuestionSet } from './QuestionSetContext';
 import { Resume } from './Resume';
 import { useRouter } from 'next/router';
 import { AnswerProgress } from './AnswerProgress';
+import { Loading } from '../shared/Loading';
 
 export function QuestionSet() {
 	const router = useRouter();
@@ -17,7 +18,7 @@ export function QuestionSet() {
 		parseInt(router.query.questionSetSize as string, 10),
 	];
 
-	const { data } = api.lesson.getQuestionSet.useQuery(
+	const { data, isLoading } = api.lesson.getQuestionSet.useQuery(
 		{ lessonId, questionTypes, questionSetSize },
 		{
 			enabled:
@@ -31,6 +32,8 @@ export function QuestionSet() {
 	return (
 		<Page>
 			{/* <Header /> */}
+
+			{isLoading && <Loading />}
 
 			{data && (
 				<QuestionSetProvider questions={questions}>

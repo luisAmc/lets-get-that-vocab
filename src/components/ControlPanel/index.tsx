@@ -2,7 +2,6 @@ import { api } from '~/utils/api';
 import { Page } from '../shared/Page';
 import { CreateUnitForm } from './CreateUnitForm';
 import { Unit } from './Unit';
-import { Loading } from '../shared/Loading';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { Button } from '../shared/Button';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
@@ -14,11 +13,9 @@ export function WordCreation() {
 
 	return (
 		<Page>
-			{isLoading && <Loading />}
-
 			{!isLoading && units && (
 				<article>
-					<header className="flex items-center justify-between mb-4">
+					<header className="mb-4 flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
 							<Button variant="secondary" size="icon" href="/">
 								<ChevronLeftIcon className="h-5 w-5" />

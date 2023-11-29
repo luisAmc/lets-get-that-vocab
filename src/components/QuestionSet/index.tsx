@@ -3,7 +3,7 @@ import { api } from '~/utils/api';
 import { Header } from '../shared/Header';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
-import { Question } from './Question';
+import { QuestionList } from './Question/QuestionList';
 import { QuestionSetProvider, useQuestionSet } from './QuestionSetContext';
 import { Resume } from './Resume';
 import { useRouter } from 'next/router';
@@ -40,7 +40,7 @@ export function QuestionSet() {
 
 						<AnswerStatus />
 
-						<QuestionOrResume />
+						<QuestionsOrResume />
 					</div>
 				</QuestionSetProvider>
 			)}
@@ -50,9 +50,9 @@ export function QuestionSet() {
 	);
 }
 
-function QuestionOrResume() {
+function QuestionsOrResume() {
 	const { answerCount, questionCount } = useQuestionSet();
 	const isSetFinished = answerCount === questionCount;
 
-	return <>{isSetFinished ? <Resume /> : <Question />}</>;
+	return <>{isSetFinished ? <Resume /> : <QuestionList />}</>;
 }

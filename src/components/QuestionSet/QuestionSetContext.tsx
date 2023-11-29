@@ -11,6 +11,7 @@ interface QuestionSetContextType {
 	answerCount: number;
 	correctAnswerCount: number;
 	incorrectAnswerCount: number;
+	getQuestionByIndex(questionIndex: number): QuestionObject;
 	getCurrentQuestion(): QuestionObject;
 	answerQuestion(isCorrect: boolean): void;
 	goToNextQuestion(): void;
@@ -50,6 +51,7 @@ export function QuestionSetProvider({
 				answerCount,
 				correctAnswerCount,
 				incorrectAnswerCount,
+				getQuestionByIndex: (questionIndex: number) => questions[questionIndex],
 				getCurrentQuestion: () => questions[currentQuestionIndex],
 				answerQuestion: (isCorrect) => {
 					setAnswers((prevAnswers) => {

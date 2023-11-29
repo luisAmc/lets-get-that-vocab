@@ -59,7 +59,7 @@ export function Modal({ title, open, onClose, children }: ModalProps) {
 									</Dialog.Title>
 
 									<Button variant="ghost" size="icon" onClick={onClose}>
-										<XMarkIcon />
+										<XMarkIcon className="h-5 w-5" />
 									</Button>
 								</div>
 

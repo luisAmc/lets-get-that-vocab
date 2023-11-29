@@ -10,16 +10,20 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '~/components/shared/Button';
 import { Pill } from '~/components/shared/Pill';
 
-export function GuessName() {
+interface GuessNameProps {
+	questionIndex: number;
+}
+
+export function GuessName({ questionIndex }: GuessNameProps) {
 	const {
 		questionCount,
 		answerCount,
-		getCurrentQuestion,
+		getQuestionByIndex,
 		answerQuestion,
 		goToNextQuestion,
 	} = useQuestionSet();
 
-	const question = getCurrentQuestion();
+	const question = getQuestionByIndex(questionIndex);
 
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [showAnswer, setShowAnswer] = useState(false);
@@ -47,7 +51,7 @@ export function GuessName() {
 
 	return (
 		<section className="flex h-full flex-1 flex-col gap-y-4 pt-2">
-			<div className='flex items-center justify-between'>
+			<div className="flex items-center justify-between">
 				<h1 className="text-lg font-medium">¿Cómo se llama esto?</h1>
 
 				<Pill>{question.word.tag.name}</Pill>

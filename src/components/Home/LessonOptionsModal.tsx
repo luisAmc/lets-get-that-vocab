@@ -107,7 +107,7 @@ export function LessonOptionsModal({
 							<input
 								{...form.register('questionSetSize', { valueAsNumber: true })}
 								className={inputVariants({ className: 'flex-1' })}
-								type="number"
+								inputMode="numeric"
 								onWheel={(event) =>
 									event.target instanceof HTMLElement && event.target.blur()
 								}

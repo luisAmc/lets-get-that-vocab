@@ -8,16 +8,20 @@ import {
 import { cn } from '../../../utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export function GuessImage() {
+interface GuessImageProps {
+	questionIndex: number;
+}
+
+export function GuessImage({ questionIndex }: GuessImageProps) {
 	const {
 		questionCount,
 		answerCount,
-		getCurrentQuestion,
+		getQuestionByIndex,
 		answerQuestion,
 		goToNextQuestion,
 	} = useQuestionSet();
 
-	const question = getCurrentQuestion();
+	const question = getQuestionByIndex(questionIndex);
 
 	const parsedAnswer = parseInt(question.answer.toString(), 10);
 

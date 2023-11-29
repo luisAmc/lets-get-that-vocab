@@ -10,16 +10,20 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Pill } from '~/components/shared/Pill';
 import { cn } from '~/utils/cn';
 
-export function GuessPhrase() {
+interface GuessPhraseProps {
+	questionIndex: number;
+}
+
+export function GuessPhrase({ questionIndex }: GuessPhraseProps) {
 	const {
 		questionCount,
 		answerCount,
-		getCurrentQuestion,
+		getQuestionByIndex,
 		answerQuestion,
 		goToNextQuestion,
 	} = useQuestionSet();
 
-	const question = getCurrentQuestion();
+	const question = getQuestionByIndex(questionIndex);
 
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 	const [showAnswer, setShowAnswer] = useState(false);

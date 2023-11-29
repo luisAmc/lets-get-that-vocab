@@ -17,16 +17,20 @@ const inputNameSchema = z.object({
 	input: z.string().min(1, 'Ingrese el nombre'),
 });
 
-export function InputName() {
+interface InputNameProps {
+	questionIndex: number;
+}
+
+export function InputName({ questionIndex }: InputNameProps) {
 	const {
 		questionCount,
 		answerCount,
-		getCurrentQuestion,
+		getQuestionByIndex,
 		answerQuestion,
 		goToNextQuestion,
 	} = useQuestionSet();
 
-	const question = getCurrentQuestion();
+	const question = getQuestionByIndex(questionIndex);
 
 	const form = useZodForm({ schema: inputNameSchema });
 

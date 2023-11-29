@@ -134,7 +134,7 @@ export function LessonOptionsModal({
 								<Checkbox
 									{...form.register('selectImage')}
 									label="Seleccionar imagen"
-									description="Se presenta una palabra y tres imagenes, el usuario selecciona la imagen que corresponda a la palabra"
+									description="Se presenta una palabra y tres imagenes, tienes que seleccionar la imagen que corresponda a la palabra"
 								/>
 							)}
 
@@ -142,7 +142,7 @@ export function LessonOptionsModal({
 								<Checkbox
 									{...form.register('selectName')}
 									label="Seleccionar nombre"
-									description="Se presenta una imagen y tres palabras, tienes la palabra que corresponda al nombre o situación de la imagen"
+									description="Se presenta una imagen y tres palabras, tienes que seleccionar la palabra que corresponda a la imagen"
 								/>
 							)}
 
@@ -150,7 +150,7 @@ export function LessonOptionsModal({
 								<Checkbox
 									{...form.register('selectPhrase')}
 									label="Seleccionar frase"
-									description="Se presenta una situación y tres frases, el usuario selecciona la frase que corresponda a la situación"
+									description="Se presenta una situación y tres frases, tienes que seleccionar la frase que corresponda a la situación"
 								/>
 							)}
 
@@ -158,7 +158,7 @@ export function LessonOptionsModal({
 								<Checkbox
 									{...form.register('inputName')}
 									label="Ingresar nombre"
-									description="Se presenta una imagen, el usuario tiene que escribir la palabra o frase que corresponda a la imagen"
+									description="Se presenta una imagen, tienes que escribir la palabra o frase que corresponda a la imagen"
 								/>
 							)}
 						</div>

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { api } from '~/utils/api';
 import { Page } from '../shared/Page';
 import { Button } from '../shared/Button';
-import { ChevronLeftIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function Word() {
@@ -16,7 +16,7 @@ export function Word() {
 	return (
 		<Page>
 			{data && (
-				<article className="border-brand-300 flex w-full flex-col gap-y-4 rounded-xl border-2 bg-white px-4 py-6 shadow-sm">
+				<article className="flex w-full flex-col gap-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 					<header className="flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
 							<Button
@@ -32,13 +32,9 @@ export function Word() {
 
 							<h1 className="text-2xl">{data.text}</h1>
 						</div>
-
-						<Button variant="destructive" size="icon">
-							<TrashIcon className="h-5 w-5" />
-						</Button>
 					</header>
 
-					<div className="bg-brand-100 h-64 overflow-hidden rounded-lg">
+					<div className="h-64 overflow-hidden rounded-lg bg-brand-100">
 						<img
 							alt="word image"
 							src={data.imgSrc}

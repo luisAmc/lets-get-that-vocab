@@ -1,10 +1,6 @@
 import { api } from '~/utils/api';
 import { Button } from '../shared/Button';
-import {
-	ChevronLeftIcon,
-	FaceFrownIcon,
-	TrashIcon,
-} from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
 import { CreateWordForm } from './CreateWordForm';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
@@ -24,7 +20,7 @@ export function Lesson() {
 	return (
 		<Page>
 			{data && (
-				<article className="border-brand-300 flex w-full flex-col gap-y-4 rounded-xl border-2 bg-white px-4 py-6 shadow-sm">
+				<article className="flex w-full flex-col gap-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 					<header className="flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
 							<Button variant="secondary" size="icon" href="/control-panel">
@@ -34,9 +30,9 @@ export function Lesson() {
 							<h1 className="text-2xl">{data.name}</h1>
 						</div>
 
-						<Button variant="destructive" size="icon">
+						{/* <Button variant="destructive" size="icon">
 							<TrashIcon className="h-5 w-5" />
-						</Button>
+						</Button> */}
 					</header>
 
 					<section>
@@ -50,7 +46,7 @@ export function Lesson() {
 									<Link
 										href={`${router.asPath}/${word.id}`}
 										key={word.id}
-										className="hover:bg-brand-200 rounded-lg px-3 py-2 hover:cursor-pointer"
+										className="rounded-lg px-3 py-2 hover:cursor-pointer hover:bg-brand-200"
 									>
 										{word.text}
 									</Link>

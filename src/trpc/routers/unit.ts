@@ -24,8 +24,14 @@ export const unitRouter = createTRPCRouter({
 	}),
 
 	create: publicProcedure
-		.input(z.object({ name: z.string().min(1) }))
+		.input(
+			z.object({ name: z.string().min(1), createAccessKey: z.string().min(1) }),
+		)
 		.mutation(async ({ ctx, input }) => {
+			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
+				throw new Error('Clave de creación incorrecta.');
+			}
+
 			return ctx.db.unit.create({
 				data: {
 					name: input.name,

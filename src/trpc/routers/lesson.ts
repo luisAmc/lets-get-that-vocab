@@ -22,9 +22,14 @@ export const lessonRouter = createTRPCRouter({
 				name: z.string().min(1),
 				unitId: z.string().min(1),
 				questionTypes: z.array(z.string()).min(1),
+				createAccessKey: z.string().min(1),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
+				throw new Error('Clave de creación incorrecta.');
+			}
+
 			// Check if unitId is valid
 			await ctx.db.unit.findUniqueOrThrow({ where: { id: input.unitId } });
 

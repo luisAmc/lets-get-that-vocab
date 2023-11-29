@@ -4,6 +4,8 @@ import { CreateUnitForm } from './CreateUnitForm';
 import { Unit } from './Unit';
 import { Loading } from '../shared/Loading';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
+import { Button } from '../shared/Button';
+import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 
 export function WordCreation() {
 	const { data, isLoading } = api.unit.getAll.useQuery();
@@ -15,17 +17,29 @@ export function WordCreation() {
 			{isLoading && <Loading />}
 
 			{!isLoading && units && (
-				<section className="flex h-full w-full flex-col gap-y-4">
-					{units.length > 0 ? (
-						units.map((unit) => <Unit key={unit.id} unit={unit} />)
-					) : (
-						<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
-							No se han creado unidades todavía.
-						</div>
-					)}
+				<article>
+					<header className="flex items-center justify-between mb-4">
+						<div className="flex items-center gap-x-2">
+							<Button variant="secondary" size="icon" href="/">
+								<ChevronLeftIcon className="h-5 w-5" />
+							</Button>
 
-					<CreateUnitForm />
-				</section>
+							<h1 className="text-2xl">Unidades</h1>
+						</div>
+					</header>
+
+					<section className="flex flex-col gap-y-4">
+						{units.length > 0 ? (
+							units.map((unit) => <Unit key={unit.id} unit={unit} />)
+						) : (
+							<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
+								No se han creado unidades todavía.
+							</div>
+						)}
+
+						<CreateUnitForm />
+					</section>
+				</article>
 			)}
 
 			<PrivacyScreen />

@@ -8,6 +8,7 @@ import { SubmitButton } from '../shared/SubmitButton';
 import { z } from 'zod';
 import { api } from '~/utils/api';
 import { QuestionType } from '@prisma/client';
+import { ErrorMessage } from '../shared/ErrorMessage';
 
 const createLessonSchema = z
 	.object({
@@ -16,6 +17,7 @@ const createLessonSchema = z
 		selectName: z.boolean(),
 		selectPhrase: z.boolean(),
 		inputName: z.boolean(),
+		createAccessKey: z.string().min(1, 'Ingrese la clave de creación.'),
 	})
 	.refine(
 		(data) =>
@@ -46,6 +48,9 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 			form.reset();
 			createModal.close();
 		},
+		onError: () => {
+			form.reset(form.getValues());
+		},
 	});
 
 	async function handleSubmit(input: z.infer<typeof createLessonSchema>) {
@@ -60,6 +65,7 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 			unitId: unitId,
 			name: input.name,
 			questionTypes,
+			createAccessKey: input.createAccessKey,
 		});
 	}
 
@@ -72,10 +78,15 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 
 			<Modal {...createModal.props} title="Nueva Lección">
 				<Form form={form} onSubmit={handleSubmit}>
+					<ErrorMessage
+						title="No se pudo crear la unidad"
+						error={createLessonMutation.error?.message}
+					/>
+
 					<Input {...form.register('name')} label="Nombre" />
 
 					<section>
-						<div className="text-brand-800 mb-2 text-sm font-medium leading-none">
+						<div className="mb-2 text-sm font-medium leading-none text-brand-800">
 							Tipos de preguntas
 						</div>
 
@@ -117,6 +128,12 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 
 						<FieldError name="availableQuestionTypes" />
 					</section>
+
+					<Input
+						{...form.register('createAccessKey')}
+						type="password"
+						label="Clave de creación"
+					/>
 
 					<SubmitButton>Crear lección</SubmitButton>
 				</Form>

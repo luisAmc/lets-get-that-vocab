@@ -85,14 +85,44 @@ export const lessonRouter = createTRPCRouter({
 				let plausibleAnswers: Array<string> = [];
 				let answer = word.text;
 
-				if (questionType === QuestionType.SELECT_NAME) {
-					plausibleAnswers = shuffle([
-						word.text,
-						...shuffledWords
-							.filter((shuffledWord) => shuffledWord !== word)
-							.slice(0, 2)
-							.map((shuffledWord) => shuffledWord.text),
-					]);
+				switch (questionType) {
+					// The game mechanics for both question types are the same,
+					// so the plausible answers can be collected in the same way.
+					case QuestionType.SELECT_NAME:
+					case QuestionType.SELECT_PHRASE: {
+						plausibleAnswers = shuffle([
+							word.text,
+							...shuffledWords
+								.filter((shuffledWord) => shuffledWord !== word)
+								.slice(0, 2)
+								.map((shuffledWord) => shuffledWord.text),
+						]);
+
+						break;
+					}
+
+					case QuestionType.SELECT_IMAGE: {
+						plausibleAnswers = shuffle([
+							word.imgSrc,
+							...shuffledWords
+								.filter((shuffledWord) => shuffledWord !== word)
+								.slice(0, 2)
+								.map((shuffledWord) => shuffledWord.imgSrc),
+						]);
+
+						answer = plausibleAnswers.indexOf(word.imgSrc).toString();
+
+						break;
+					}
+
+					// In this case there's no plausible answers,
+					// the user input in the question is either: correct or not.
+					//
+					// There's no selection needed.
+					case QuestionType.INPUT_NAME:
+					default: {
+						plausibleAnswers = [];
+					}
 				}
 
 				return { word, type: questionType, plausibleAnswers, answer };

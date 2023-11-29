@@ -48,8 +48,8 @@ export function GuessImage() {
 	return (
 		<section className="flex h-full flex-1 flex-col gap-y-4 pt-2">
 			<h1 className="text-lg font-medium">
-				¿Cúal de estos es "{' '}
-				<span className="font-bold">{question.word.text}</span>"?
+				¿Cúal de estos es &quot;{' '}
+				<span className="font-bold">{question.word.text}</span>&quot;?
 			</h1>
 
 			<div className="grid grid-cols-2 gap-2">

@@ -1,3 +1,3 @@
 export function Header() {
-	return <header className="text-brand-900">Let's Get That Vocab!</header>;
+	return <header className="text-brand-900">Let&apos;s Get That Vocab!</header>;
 }

@@ -56,6 +56,11 @@ export const lessonRouter = createTRPCRouter({
 					id: true,
 					text: true,
 					imgSrc: true,
+					tag: {
+						select: {
+							name: true,
+						},
+					},
 				},
 			});
 

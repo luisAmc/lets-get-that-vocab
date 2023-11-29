@@ -49,52 +49,63 @@ export function Home() {
 
 			{!isLoading && data && (
 				<>
-					<Header />
+					{/* <Header /> */}
 
 					<Link href="/control-panel">Link</Link>
 
-					{data.map((unit, unitIndex) => (
-						<section
-							key={unit.id}
-							className="flex w-full flex-col rounded-xl bg-white/10"
-						>
-							<div className="flex items-center rounded-t-xl bg-gray-200/50 p-6">
-								<span className="text-3xl font-medium text-gray-600">
-									{unit.name}
-								</span>
-							</div>
+					{data
+						.filter((unit) => unit.lessons.length > 0)
+						.map((unit, unitIndex) => (
+							<section
+								key={unit.id}
+								className="flex w-full flex-col rounded-xl bg-white"
+							>
+								<div
+									className={cn(
+										['bg-green-400', 'bg-purple-400', 'bg-teal-400'][
+											unitIndex % 3
+										],
+										'flex items-center rounded-xl p-6',
+									)}
+								>
+									<span className="text-3xl font-medium text-white">
+										{unit.name}
+									</span>
+								</div>
 
-							<div className="flex flex-col items-center justify-center gap-y-4 py-4 text-gray-900">
-								{unit.lessons
-									// .filter((lesson) => lesson._count.words > 0)
-									.map((lesson, lessonIndex) => (
-										<div
-											key={lesson.id}
-											className={
-												unitIndex % 2 === 0
-													? shiftValues[lessonIndex % shiftValues.length]
-													: shiftValuesReversed[
-															lessonIndex % shiftValues.length
-													  ]
-											}
-										>
-											<button
-												onClick={() => handleLessonClick(lesson)}
-												className={cn(
-													'relative flex h-32 w-32 items-center justify-center rounded-full border-b-8 border-sky-700 bg-sky-400 p-4 shadow-md',
-													'hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-primary focus:ring-offset-4',
-													'transition-transform hover:-translate-y-0.5',
-												)}
+								<div className="flex flex-col items-center justify-center gap-y-4 py-4">
+									{unit.lessons
+										.filter((lesson) => lesson._count.words > 0)
+										.map((lesson, lessonIndex) => (
+											<div
+												key={lesson.id}
+												className={
+													unitIndex % 2 === 0
+														? shiftValues[lessonIndex % shiftValues.length]
+														: shiftValuesReversed[
+																lessonIndex % shiftValues.length
+														  ]
+												}
 											>
-												<span className="text-lg font-semibold text-sky-800">
-													{lesson.name}
-												</span>
-											</button>
-										</div>
-									))}
-							</div>
-						</section>
-					))}
+												<button
+													onClick={() => handleLessonClick(lesson)}
+													className={cn(
+														'relative flex items-center justify-center rounded-full border-b-8 border-green-800 bg-green-500 px-6 py-4 shadow-md',
+														'hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-offset-4',
+														'transition-transform hover:-translate-y-0.5',
+													)}
+												>
+													<span className="text-lg font-semibold text-white">
+														{lesson.name}
+													</span>
+												</button>
+											</div>
+										))}
+								</div>
+							</section>
+						))}
+
+					<div className="flex-1"></div>
 				</>
 			)}
 

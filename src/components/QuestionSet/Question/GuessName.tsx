@@ -8,6 +8,7 @@ import {
 import { cn } from '../../../utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '~/components/shared/Button';
+import { Pill } from '~/components/shared/Pill';
 
 export function GuessName() {
 	const {
@@ -45,14 +46,20 @@ export function GuessName() {
 	const isAnswer = selectedOption === question.answer;
 
 	return (
-		<section className="flex h-full flex-1 flex-col gap-y-4">
-			<h1 className="text-center text-3xl">¿Cómo se llama esto?</h1>
+		<section className="flex h-full flex-1 flex-col gap-y-4 pt-2">
+			<div className="flex items-center justify-between">
+				<h1 className="text-lg font-medium">¿Cómo se llama esto?</h1>
+
+				<Pill>{question.word.tag.name}</Pill>
+			</div>
 
 			<div className="relative overflow-hidden rounded-xl">
-				<img
-					className="aspect-[1/1] w-full object-cover"
-					src={question.word.imgSrc}
-				/>
+				<div className="aspect-square w-full bg-gray-300">
+					<img
+						className="aspect-square w-full object-cover"
+						src={question.word.imgSrc}
+					/>
+				</div>
 
 				<AnimatePresence>
 					{showAnswer && (

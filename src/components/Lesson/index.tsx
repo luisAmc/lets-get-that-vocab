@@ -42,7 +42,7 @@ export function Lesson() {
 
 						<div className="divide-y">
 							{data.words.map((word) => (
-								<div>
+								<div key={word.id}>
 									<Disclosure>
 										{({ open }) => (
 											<>

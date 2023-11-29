@@ -14,6 +14,7 @@ import {
 	Dropzone,
 	MAX_FILE_SIZE,
 } from '../shared/Dropzone';
+import { ErrorMessage } from '../shared/ErrorMessage';
 
 async function uploadFile(signedUrl: string, imageFile: File) {
 	await fetch(signedUrl, {
@@ -36,8 +37,8 @@ const createWordSchema = z.object({
 			(files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
 			'Solo se soportan formatos .jpg, .jpeg, .png y .webp.',
 		),
-	// imgSrc: z.string().min(1, 'Ingrese el link de la imagen correspondiente.'),
 	tagId: z.string().min(1, 'Seleccione una etiqueta.'),
+	createAccessKey: z.string().min(1, 'Ingrese la clave de creación.'),
 });
 
 export function CreateWordForm() {
@@ -63,7 +64,11 @@ export function CreateWordForm() {
 
 	const trpcContext = api.useUtils();
 
-	const createSignedMutation = api.word.createPresignedUrl.useMutation();
+	const createSignedMutation = api.word.createPresignedUrl.useMutation({
+		onError: () => {
+			form.reset(form.getValues());
+		},
+	});
 
 	const createWordMutation = api.word.create.useMutation({
 		onSuccess: () => {
@@ -73,12 +78,16 @@ export function CreateWordForm() {
 			form.reset();
 			createWordModal.close();
 		},
+		onError: () => {
+			form.reset(form.getValues());
+		},
 	});
 
 	async function handleSubmit(input: z.infer<typeof createWordSchema>) {
 		const signedUrl = await createSignedMutation.mutateAsync({
 			directory: 'images/',
 			ext: (input.media[0] as File).name.split('.').pop()!,
+			createAccessKey: input.createAccessKey,
 		});
 
 		const imgSrc = await uploadFile(signedUrl, input.media[0] as File);
@@ -88,6 +97,7 @@ export function CreateWordForm() {
 			name: input.name,
 			tagId: input.tagId,
 			lessonId: lessonId,
+			createAccessKey: input.createAccessKey,
 		});
 	}
 
@@ -100,11 +110,25 @@ export function CreateWordForm() {
 
 			<Modal {...createWordModal.props} title="Crear Palabra / Frase">
 				<Form form={form} onSubmit={handleSubmit}>
+					<ErrorMessage
+						title="No se pudo crear la unidad"
+						error={
+							createSignedMutation.error?.message ||
+							createWordMutation.error?.message
+						}
+					/>
+
 					<Input {...form.register('name')} label="Palabra o frase" />
 
 					<Dropzone />
 
 					<RadioButtonGroup name="tagId" label="Etiqueta" options={tags} />
+
+					<Input
+						{...form.register('createAccessKey')}
+						type="password"
+						label="Clave de creación"
+					/>
 
 					<SubmitButton>
 						<CheckCircleIcon className="mr-1 h-4 w-4" />

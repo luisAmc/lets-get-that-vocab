@@ -20,8 +20,18 @@ export const wordRouter = createTRPCRouter({
 			}),
 		),
 	createPresignedUrl: publicProcedure
-		.input(z.object({ directory: z.string().min(1), ext: z.string().min(1) }))
+		.input(
+			z.object({
+				directory: z.string().min(1),
+				ext: z.string().min(1),
+				createAccessKey: z.string().min(1),
+			}),
+		)
 		.mutation(async ({ input }) => {
+			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
+				throw new Error('Clave de creación incorrecta.');
+			}
+
 			const key = `${input.directory}${randomUUID()}.${input.ext}`;
 
 			const command = new PutObjectCommand({
@@ -40,9 +50,14 @@ export const wordRouter = createTRPCRouter({
 				imgSrc: z.string().min(1),
 				tagId: z.string().min(1),
 				lessonId: z.string().min(1),
+				createAccessKey: z.string().min(1),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
+			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
+				throw new Error('Clave de creación incorrecta.');
+			}
+
 			// Check if tagId is valid
 			await ctx.db.tag.findFirstOrThrow({ where: { id: input.tagId } });
 

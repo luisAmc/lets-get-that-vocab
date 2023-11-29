@@ -61,7 +61,7 @@ export function QuestionSetProvider({
 				},
 				goToNextQuestion: () => {
 					if (currentQuestionIndex === questions.length - 1) {
-						console.log('Finished!');
+						// Finished!
 					} else {
 						setCurrentQuestionIndex((currentIndex) => currentIndex + 1);
 					}

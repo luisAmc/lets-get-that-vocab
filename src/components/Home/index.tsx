@@ -7,7 +7,7 @@ import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { useModal } from '../shared/Modal';
 import { useState } from 'react';
-import Link from 'next/link';
+import { AnimatePresence, Variants, motion } from 'framer-motion';
 
 const shiftValues = [
 	'm-0',
@@ -31,6 +31,19 @@ const shiftValuesReversed = [
 	// '-ml-[45px]',
 ];
 
+const lessonVariants: Variants = {
+	initial: {
+		opacity: 0,
+		y: 20,
+		transition: { duration: 0.3 },
+	},
+	animate: (lessonIndex) => ({
+		opacity: 1,
+		y: 0,
+		transition: { delay: lessonIndex * 0.15 },
+	}),
+};
+
 export function Home() {
 	const { data, isLoading } = api.unit.getAll.useQuery();
 
@@ -50,8 +63,6 @@ export function Home() {
 			{!isLoading && data && (
 				<>
 					{/* <Header /> */}
-
-					<Link href="/control-panel">Link</Link>
 
 					{data
 						.filter((unit) => unit.lessons.length > 0)
@@ -73,35 +84,41 @@ export function Home() {
 									</span>
 								</div>
 
-								<div className="flex flex-col items-center justify-center gap-y-4 py-4">
-									{unit.lessons
-										.filter((lesson) => lesson._count.words > 0)
-										.map((lesson, lessonIndex) => (
-											<div
-												key={lesson.id}
-												className={
-													unitIndex % 2 === 0
-														? shiftValues[lessonIndex % shiftValues.length]
-														: shiftValuesReversed[
-																lessonIndex % shiftValues.length
-														  ]
-												}
-											>
-												<button
-													onClick={() => handleLessonClick(lesson)}
-													className={cn(
-														'relative flex items-center justify-center rounded-full border-b-8 border-green-800 bg-green-500 px-6 py-4 shadow-md',
-														'hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-offset-4',
-														'transition-transform hover:-translate-y-0.5',
-													)}
+								<AnimatePresence>
+									<div className="flex flex-col items-center justify-center gap-y-4 py-4">
+										{unit.lessons
+											.filter((lesson) => lesson._count.words > 0)
+											.map((lesson, lessonIndex) => (
+												<motion.div
+													key={lesson.id}
+													className={
+														unitIndex % 2 === 0
+															? shiftValues[lessonIndex % shiftValues.length]
+															: shiftValuesReversed[
+																	lessonIndex % shiftValues.length
+															  ]
+													}
+													initial="initial"
+													animate="animate"
+													variants={lessonVariants}
+													custom={lessonIndex}
 												>
-													<span className="text-lg font-semibold text-white">
-														{lesson.name}
-													</span>
-												</button>
-											</div>
-										))}
-								</div>
+													<button
+														onClick={() => handleLessonClick(lesson)}
+														className={cn(
+															'relative flex items-center justify-center rounded-full border-b-8 border-green-800 bg-green-500 px-6 py-4 shadow-md',
+															'hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-offset-4',
+															'transition-transform hover:-translate-y-0.5',
+														)}
+													>
+														<span className="text-lg font-semibold text-white">
+															{lesson.name}
+														</span>
+													</button>
+												</motion.div>
+											))}
+									</div>
+								</AnimatePresence>
 							</section>
 						))}
 

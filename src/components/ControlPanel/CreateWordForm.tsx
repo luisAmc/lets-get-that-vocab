@@ -3,7 +3,7 @@ import { Button } from '../shared/Button';
 import { Form, useZodForm } from '../shared/Form';
 import { Input } from '../shared/Input';
 import { Modal, useModal } from '../shared/Modal';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { RadioButtonGroup } from '../shared/RadioButtonGroup';
 import { SubmitButton } from '../shared/SubmitButton';
 import { useMemo } from 'react';
@@ -106,7 +106,10 @@ export function CreateWordForm() {
 
 					<RadioButtonGroup name="tagId" label="Etiqueta" options={tags} />
 
-					<SubmitButton>Crear palabra / frase</SubmitButton>
+					<SubmitButton>
+						<CheckCircleIcon className="mr-1 h-4 w-4" />
+						<span>Crear palabra / frase</span>
+					</SubmitButton>
 				</Form>
 			</Modal>
 		</>

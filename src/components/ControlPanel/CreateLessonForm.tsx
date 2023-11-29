@@ -5,7 +5,6 @@ import { Input } from '../shared/Input';
 import { Modal, useModal } from '../shared/Modal';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { SubmitButton } from '../shared/SubmitButton';
-import { useRouter } from 'next/router';
 import { z } from 'zod';
 import { api } from '~/utils/api';
 import { QuestionType } from '@prisma/client';
@@ -76,7 +75,7 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 					<Input {...form.register('name')} label="Nombre" />
 
 					<section>
-						<div className="mb-2 text-sm font-medium leading-none text-gray-800">
+						<div className="text-brand-800 mb-2 text-sm font-medium leading-none">
 							Tipos de preguntas
 						</div>
 

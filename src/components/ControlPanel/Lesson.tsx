@@ -1,6 +1,4 @@
 import { api } from '~/utils/api';
-import { useRouter } from 'next/router';
-import { Page } from '../shared/Page';
 import { Button } from '../shared/Button';
 import {
 	ChevronLeftIcon,
@@ -8,6 +6,9 @@ import {
 	TrashIcon,
 } from '@heroicons/react/24/outline';
 import { CreateWordForm } from './CreateWordForm';
+import { Page } from '../shared/Page';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export function Lesson() {
@@ -15,15 +16,15 @@ export function Lesson() {
 
 	const { data } = api.lesson.get.useQuery(
 		{ id: router.query.lessonId as string },
-		{ enabled: !!router.isReady },
+		{ enabled: !!router.isReady, staleTime: Infinity },
 	);
 
 	const words = data?.words ?? [];
 
 	return (
 		<Page>
-			{data ? (
-				<article className="flex w-full flex-col gap-y-2 rounded-xl bg-white px-4 py-6 text-gray-700">
+			{data && (
+				<article className="border-brand-300 flex w-full flex-col gap-y-4 rounded-xl border-2 bg-white px-4 py-6 shadow-sm">
 					<header className="flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
 							<Button variant="secondary" size="icon" href="/control-panel">
@@ -49,7 +50,7 @@ export function Lesson() {
 									<Link
 										href={`${router.asPath}/${word.id}`}
 										key={word.id}
-										className="rounded-xl bg-gray-50 px-3 py-2 hover:cursor-pointer hover:bg-gray-200"
+										className="hover:bg-brand-200 rounded-lg px-3 py-2 hover:cursor-pointer"
 									>
 										{word.text}
 									</Link>
@@ -65,9 +66,9 @@ export function Lesson() {
 						</div>
 					</section>
 				</article>
-			) : (
-				<span>No hay una lección con este ID.</span>
 			)}
+
+			<PrivacyScreen />
 		</Page>
 	);
 }

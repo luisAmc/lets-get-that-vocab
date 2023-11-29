@@ -3,7 +3,7 @@ import { api } from '~/utils/api';
 import { Page } from '../shared/Page';
 import { Button } from '../shared/Button';
 import { ChevronLeftIcon, TrashIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function Word() {
 	const router = useRouter();
@@ -15,8 +15,8 @@ export function Word() {
 
 	return (
 		<Page>
-			{data ? (
-				<article className="flex w-full flex-col gap-y-2 rounded-xl bg-white px-4 py-6 text-gray-700">
+			{data && (
+				<article className="border-brand-300 flex w-full flex-col gap-y-4 rounded-xl border-2 bg-white px-4 py-6 shadow-sm">
 					<header className="flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
 							<Button
@@ -38,23 +38,23 @@ export function Word() {
 						</Button>
 					</header>
 
-					<section className="mt-2 space-y-4">
-						<span className="rounded-full bg-gray-500 px-2 py-1 text-xs text-gray-50">
-							{data.tag.name}
-						</span>
-
-						<Image
+					<div className="bg-brand-100 h-64 overflow-hidden rounded-lg">
+						<img
 							alt="word image"
 							src={data.imgSrc}
-							width={500}
-							height={500}
-							className="h-64 w-full rounded-lg object-cover"
+							className="h-full w-full object-cover"
 						/>
-					</section>
+					</div>
+
+					<div>
+						<span className="mt-2 rounded-full bg-gray-500 px-2 py-1 text-xs text-gray-50">
+							{data.tag.name}
+						</span>
+					</div>
 				</article>
-			) : (
-				<span>No hay una palabra con este ID.</span>
 			)}
+
+			<PrivacyScreen />
 		</Page>
 	);
 }

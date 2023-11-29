@@ -2,15 +2,15 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { ComponentPropsWithRef, forwardRef } from 'react';
 import { FieldError } from './Form';
 
-const inputStyles = cva([
-	'px-3 py-2 text-sm h-10 w-full rounded-lg border border-solid border-gray-200 text-gray-600',
-	'focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-white focus:ring-offset-2',
+export const inputVariants = cva([
+	'px-3 py-2 text-sm h-10 w-full rounded-lg border border-solid border-brand-200 text-brand-800',
+	'focus:border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-white focus:ring-offset-2',
 	'disabled:opacity-60 disabled:pointer-events-none',
 	'hover:bg-opacity-80 appearance-none transition ease-in-out',
 ]);
 
 interface InputProps
-	extends VariantProps<typeof inputStyles>,
+	extends VariantProps<typeof inputVariants>,
 		ComponentPropsWithRef<'input'> {
 	label?: string;
 }
@@ -22,13 +22,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
 	return (
 		<label>
 			{label && (
-				<div className="mb-2 text-sm font-medium leading-none text-gray-800 disabled:cursor-not-allowed disabled:opacity-70">
+				<div className="mb-2 text-sm font-medium leading-none text-brand-800">
 					{label}
 				</div>
 			)}
 
 			<input
-				className={inputStyles()}
+				className={inputVariants()}
 				ref={ref}
 				type={type}
 				step={type === 'number' ? 'any' : undefined}

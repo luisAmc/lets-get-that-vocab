@@ -1,43 +1,58 @@
-import { AnswerCounters } from './AnswerCounters';
 import { AnswerStatus } from './AnswerStatus';
+import { api } from '~/utils/api';
 import { Header } from '../shared/Header';
+import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
-// import { Question } from './Question';
+import { Question } from './Question';
 import { QuestionSetProvider, useQuestionSet } from './QuestionSetContext';
 import { Resume } from './Resume';
-import { Page } from '../shared/Page';
-import { Question } from './Question';
-import { generateQuestionSet } from '~/utils/generateQuestionSet';
+import { useRouter } from 'next/router';
+import { AnswerProgress } from './AnswerProgress';
 
 export function QuestionSet() {
-    const questions = generateQuestionSet();
+	const router = useRouter();
+	const [lessonId, questionTypes, questionSetSize] = [
+		router.query.lessonId as string,
+		router.query.questionTypes as string,
+		parseInt(router.query.questionSetSize as string, 10),
+	];
 
-    return (
-        <Page>
-            <Header />
+	const { data } = api.lesson.getQuestionSet.useQuery(
+		{ lessonId, questionTypes, questionSetSize },
+		{
+			enabled:
+				router.isReady && !!lessonId && !!questionTypes && !!questionSetSize,
+			refetchOnWindowFocus: false,
+		},
+	);
 
-            <QuestionSetProvider questions={questions}>
-                <div className="flex flex-1 flex-col items-center justify-center gap-y-6 w-full">
-                    {/* <AnswerCounters /> */}
-                    <AnswerStatus />
+	const questions = data ?? [];
 
-                    <QuestionOrResume />
+	return (
+		<Page>
+			{/* <Header /> */}
 
-                </div>
-            </QuestionSetProvider>
+			{data && (
+				<QuestionSetProvider questions={questions}>
+					<div className="flex h-full w-full flex-col justify-center gap-y-4">
+						{/* <AnswerCounters /> */}
+						<AnswerProgress />
 
-            <PrivacyScreen />
-        </Page>
-    );
+						<AnswerStatus />
+
+						<QuestionOrResume />
+					</div>
+				</QuestionSetProvider>
+			)}
+
+			<PrivacyScreen />
+		</Page>
+	);
 }
 
 function QuestionOrResume() {
-    const { answerCount, questionCount } = useQuestionSet();
-    const isSetFinished = answerCount === questionCount;
+	const { answerCount, questionCount } = useQuestionSet();
+	const isSetFinished = answerCount === questionCount;
 
-    return (
-        <div className="flex-1 w-full">
-            {isSetFinished ? <Resume /> : <Question />}
-        </div>
-    );
+	return <>{isSetFinished ? <Resume /> : <Question />}</>;
 }

@@ -40,4 +40,105 @@ export const lessonRouter = createTRPCRouter({
 				},
 			});
 		}),
+
+	getQuestionSet: publicProcedure
+		.input(
+			z.object({
+				lessonId: z.string().min(1),
+				questionSetSize: z.number().int().positive(),
+				questionTypes: z.string().min(1),
+			}),
+		)
+		.query(async ({ ctx, input }) => {
+			const wordsInOrder = await ctx.db.word.findMany({
+				where: { lessonId: input.lessonId },
+				select: {
+					id: true,
+					text: true,
+					imgSrc: true,
+					tag: {
+						select: {
+							name: true,
+						},
+					},
+				},
+			});
+
+			let shuffledWords = shuffle(wordsInOrder);
+
+			const selectedWords = shuffledWords.slice(0, input.questionSetSize);
+
+			const plausibleQuestionTypes = input.questionTypes
+				.split(',')
+				.map((type) => fieldNameToQuestionType[type]);
+
+			const questions = selectedWords.map((word) => {
+				shuffledWords = shuffle(shuffledWords);
+
+				const randomIndex = Math.max(
+					Math.round(Math.random() * plausibleQuestionTypes.length - 1),
+					0,
+				);
+
+				const questionType = plausibleQuestionTypes[randomIndex];
+
+				let plausibleAnswers: Array<string> = [];
+				let answer = word.text;
+
+				switch (questionType) {
+					// The game mechanics for both question types are the same,
+					// so the plausible answers can be collected in the same way.
+					case QuestionType.SELECT_NAME:
+					case QuestionType.SELECT_PHRASE: {
+						plausibleAnswers = shuffle([
+							word.text,
+							...shuffledWords
+								.filter((shuffledWord) => shuffledWord !== word)
+								.slice(0, 2)
+								.map((shuffledWord) => shuffledWord.text),
+						]);
+
+						break;
+					}
+
+					case QuestionType.SELECT_IMAGE: {
+						plausibleAnswers = shuffle([
+							word.imgSrc,
+							...shuffledWords
+								.filter((shuffledWord) => shuffledWord !== word)
+								.slice(0, 2)
+								.map((shuffledWord) => shuffledWord.imgSrc),
+						]);
+
+						answer = plausibleAnswers.indexOf(word.imgSrc).toString();
+
+						break;
+					}
+
+					// In this case there's no plausible answers,
+					// the user input in the question is either: correct or not.
+					//
+					// There's no selection needed.
+					case QuestionType.INPUT_NAME:
+					default: {
+						plausibleAnswers = [];
+					}
+				}
+
+				return { word, type: questionType, plausibleAnswers, answer };
+			});
+
+			return questions;
+		}),
 });
+
+function shuffle<T>(array: Array<T>) {
+	return array.sort(() => Math.random() - 0.5);
+}
+
+const fieldNameToQuestionType: Record<string, QuestionType> = {
+	selectName: QuestionType.SELECT_NAME,
+	selectImage: QuestionType.SELECT_IMAGE,
+	selectPhrase: QuestionType.SELECT_PHRASE,
+	inputName: QuestionType.INPUT_NAME,
+} as const;

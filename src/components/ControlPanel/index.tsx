@@ -3,6 +3,7 @@ import { Page } from '../shared/Page';
 import { CreateUnitForm } from './CreateUnitForm';
 import { Unit } from './Unit';
 import { Loading } from '../shared/Loading';
+import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function WordCreation() {
 	const { data, isLoading } = api.unit.getAll.useQuery();
@@ -18,7 +19,7 @@ export function WordCreation() {
 					{units.length > 0 ? (
 						units.map((unit) => <Unit key={unit.id} unit={unit} />)
 					) : (
-						<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-gray-600">
+						<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
 							No se han creado unidades todavía.
 						</div>
 					)}
@@ -26,6 +27,8 @@ export function WordCreation() {
 					<CreateUnitForm />
 				</section>
 			)}
+
+			<PrivacyScreen />
 		</Page>
 	);
 }

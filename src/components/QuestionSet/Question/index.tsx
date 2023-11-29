@@ -1,21 +1,42 @@
-import { useQuestionSet } from '../QuestionSetContext';
-import { type QUESTION_TYPE } from '../../../utils/generateQuestionSet';
-import { GuessName } from './GuessName';
-import { ReactNode } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { GuessImage } from './GuessImage';
+import { GuessName } from './GuessName';
+import { GuessPhrase } from './GuessPhrase';
 import { InputName } from './InputName';
+import { QuestionType } from '@prisma/client';
+import { ReactNode } from 'react';
+import { useQuestionSet } from '../QuestionSetContext';
 
-const QuestionComponent: Record<QUESTION_TYPE, ReactNode> = {
-    GUESS_NAME_A: <GuessName />,
-    GUESS_NAME_B: <GuessName />,
-    GUESS_IMAGE: <GuessImage />,
-    INPUT_NAME: <InputName />,
+const QuestionComponent: Record<QuestionType, ReactNode> = {
+	SELECT_NAME: <GuessName />,
+	SELECT_IMAGE: <GuessImage />,
+	SELECT_PHRASE: <GuessPhrase />,
+	INPUT_NAME: <InputName />,
 };
 
 export function Question() {
-    const { getCurrentQuestion } = useQuestionSet();
+	const { getCurrentQuestion } = useQuestionSet();
 
-    const question = getCurrentQuestion();
+	const question = getCurrentQuestion();
 
-    return QuestionComponent[question.type];
+	return (
+		<div className="h-full">
+			<AnimatePresence mode="wait">
+				<motion.div
+					key={`question-${question.word.text}`}
+					initial="initial"
+					animate="animate"
+					exit="exit"
+					variants={{
+						initial: { opacity: 0, y: -20, transition: { duration: 0.3 } },
+						animate: { opacity: 1, y: 0 },
+						exit: { opacity: 0, x: -500, y: 40, transition: { duration: 0.3 } },
+					}}
+					className="relative h-full w-full rounded-xl border border-brand-200 bg-white p-4"
+				>
+					{QuestionComponent[question.type as QuestionType]}
+				</motion.div>
+			</AnimatePresence>
+		</div>
+	);
 }

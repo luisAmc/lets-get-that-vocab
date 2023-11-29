@@ -9,7 +9,16 @@ export const unitRouter = createTRPCRouter({
 			select: {
 				id: true,
 				name: true,
-				lessons: { select: { id: true, name: true } },
+				lessons: {
+					select: {
+						id: true,
+						name: true,
+						availableQuestionTypes: true,
+						_count: {
+							select: { words: true },
+						},
+					},
+				},
 			},
 		});
 	}),

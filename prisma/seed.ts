@@ -4,12 +4,13 @@ const TAGS = [
 	'Animales',
 	'Comidas',
 	'Objetos',
-	'Personas',
-	'Profesión',
 	'Artículos de ropa',
+	'Personas',
+	'Profesiones',
 	'Expresiones',
+	'Acción',
 	'Saludos',
-	'Acción'
+	'Comandos',
 ];
 
 async function main() {

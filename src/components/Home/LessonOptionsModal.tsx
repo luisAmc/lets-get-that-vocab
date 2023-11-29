@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { SubmitButton } from '../shared/SubmitButton';
 import { useRouter } from 'next/router';
 import { inputVariants } from '../shared/Input';
+import { Button } from '../shared/Button';
 
 export type LessonType =
 	RouterOutputs['unit']['getAll'][number]['lessons'][number];
@@ -164,6 +165,10 @@ export function LessonOptionsModal({
 
 						<FieldError name="availableQuestionTypes" />
 					</section>
+
+					<Button variant="ghost" href={`/lesson/${lesson.id}`}>
+						¿Que viene en esta lección?
+					</Button>
 
 					<SubmitButton>
 						<CheckCircleIcon className="mr-1 h-4 w-4" />

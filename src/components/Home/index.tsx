@@ -64,7 +64,7 @@ export function Home() {
 				<>
 					{/* <Header /> */}
 
-					<div className='flex flex-col gap-y-4'>
+					<div className="flex flex-col gap-y-4">
 						{data
 							.filter((unit) => unit.lessons.length > 0)
 							.map((unit, unitIndex) => (

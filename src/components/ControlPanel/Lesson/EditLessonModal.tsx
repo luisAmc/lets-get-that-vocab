@@ -95,7 +95,7 @@ export function EditLessonModal({ lesson }: EditLessonModalProps) {
 				<PencilIcon className="h-5 w-5" />
 			</Button>
 
-			<Modal {...editModal.props} title="Nueva Lección">
+			<Modal {...editModal.props} title="Editar Lección">
 				<Form form={form} onSubmit={handleSubmit}>
 					<ErrorMessage
 						title="No se pudo crear la unidad"

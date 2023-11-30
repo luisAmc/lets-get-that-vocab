@@ -1,6 +1,7 @@
+import { CreateLessonModal } from '../Lesson/CreateLessonModal';
+import { EditUnitModal } from './EditUnitModal';
 import { RouterOutputs } from '~/utils/api';
 import Link from 'next/link';
-import { CreateLessonForm } from '../Lesson/CreateLessonForm';
 
 interface UnitProps {
 	unit: RouterOutputs['unit']['getAll'][number];
@@ -9,13 +10,17 @@ interface UnitProps {
 export function Unit({ unit }: UnitProps) {
 	return (
 		<div className="flex w-full flex-col gap-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
-			<h1 className="text-2xl">{unit.name}</h1>
+			<div className="flex items-center justify-between">
+				<h1 className="text-2xl">{unit.name}</h1>
+
+				<EditUnitModal unit={unit} />
+			</div>
 
 			<span className="text-sm font-medium">Lecciones</span>
 
 			<div className="flex flex-col">
 				{unit.lessons.length > 0 ? (
-					unit.lessons.map((lesson, lessonIndex) => (
+					unit.lessons.map((lesson) => (
 						<Link
 							href={`/control-panel/${unit.id}/${lesson.id}`}
 							key={lesson.id}
@@ -31,7 +36,7 @@ export function Unit({ unit }: UnitProps) {
 				)}
 			</div>
 
-			<CreateLessonForm unitId={unit.id} />
+			<CreateLessonModal unitId={unit.id} />
 		</div>
 	);
 }

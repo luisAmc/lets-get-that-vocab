@@ -1,7 +1,7 @@
 import { api } from '~/utils/api';
 import { Button } from '~/components/shared/Button';
 import { ChevronLeftIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
-import { CreateWordForm } from '../Word/CreateWordForm';
+import { CreateWordModal } from '../Word/CreateWordModal';
 import { EditLessonModal } from './EditLessonModal';
 import { Page } from '~/components/shared/Page';
 import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
@@ -57,7 +57,7 @@ export function Lesson() {
 								</div>
 							)}
 
-							<CreateWordForm />
+							<CreateWordModal />
 						</div>
 					</section>
 				</article>

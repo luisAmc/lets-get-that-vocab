@@ -12,7 +12,7 @@ import { Modal, useModal } from '~/components/shared/Modal';
 import { RadioButtonGroup } from '~/components/shared/RadioButtonGroup';
 import { RouterOutputs, api } from '~/utils/api';
 import { SubmitButton } from '~/components/shared/SubmitButton';
-import { uploadFile } from './CreateWordForm';
+import { uploadFile } from './CreateWordModal';
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { z } from 'zod';

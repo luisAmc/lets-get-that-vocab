@@ -41,7 +41,7 @@ const createWordSchema = z.object({
 	createAccessKey: z.string().min(1, 'Ingrese la clave de creación.'),
 });
 
-export function CreateWordForm() {
+export function CreateWordModal() {
 	const router = useRouter();
 	const lessonId = router.query.lessonId as string;
 

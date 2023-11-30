@@ -3,7 +3,7 @@ import { Button } from '../../shared/Button';
 import { Form, useZodForm } from '../../shared/Form';
 import { Input } from '../../shared/Input';
 import { Modal, useModal } from '../../shared/Modal';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
+import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { SubmitButton } from '../../shared/SubmitButton';
 import { z } from 'zod';
 import { ErrorMessage } from '../../shared/ErrorMessage';
@@ -13,7 +13,7 @@ const createUnitSchema = z.object({
 	createAccessKey: z.string().min(1, 'Ingrese la clave de creación.'),
 });
 
-export function CreateUnitForm() {
+export function CreateUnitModal() {
 	const form = useZodForm({ schema: createUnitSchema });
 
 	const createUnitModal = useModal();
@@ -54,16 +54,16 @@ export function CreateUnitForm() {
 						title="No se pudo crear la unidad"
 						error={createUnitMutation.error?.message}
 					/>
-
 					<Input {...form.register('name')} label="Nombre" />
-
 					<Input
 						{...form.register('createAccessKey')}
 						type="password"
 						label="Clave de creación"
 					/>
-
-					<SubmitButton>Crear unidad</SubmitButton>
+					<SubmitButton>
+						<CheckCircleIcon className="mr-1 h-4 w-4" />
+						<span>Crear</span>
+					</SubmitButton>
 				</Form>
 			</Modal>
 		</>

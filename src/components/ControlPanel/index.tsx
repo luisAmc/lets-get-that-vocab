@@ -1,6 +1,6 @@
 import { api } from '~/utils/api';
 import { Page } from '../shared/Page';
-import { CreateUnitForm } from './Unit/CreateUnitForm';
+import { CreateUnitModal } from './Unit/CreateUnitModal';
 import { Unit } from './Unit';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { Button } from '../shared/Button';
@@ -34,7 +34,7 @@ export function WordCreation() {
 							</div>
 						)}
 
-						<CreateUnitForm />
+						<CreateUnitModal />
 					</section>
 				</article>
 			)}

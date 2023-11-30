@@ -35,7 +35,7 @@ interface CreateLessonFormProps {
 	unitId: string;
 }
 
-export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
+export function CreateLessonModal({ unitId }: CreateLessonFormProps) {
 	const form = useZodForm({ schema: createLessonSchema });
 
 	const createModal = useModal();

@@ -16,7 +16,7 @@ import {
 } from '../shared/Dropzone';
 import { ErrorMessage } from '../shared/ErrorMessage';
 
-async function uploadFile(signedUrl: string, imageFile: File) {
+export async function uploadFile(signedUrl: string, imageFile: File) {
 	await fetch(signedUrl, {
 		method: 'PUT',
 		body: imageFile,
@@ -132,7 +132,7 @@ export function CreateWordForm() {
 
 					<SubmitButton>
 						<CheckCircleIcon className="mr-1 h-4 w-4" />
-						<span>Crear palabra / frase</span>
+						<span>Crear</span>
 					</SubmitButton>
 				</Form>
 			</Modal>

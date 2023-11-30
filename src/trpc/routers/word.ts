@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
-import { PutObjectCommand } from '@aws-sdk/client-s3';
+import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
 import { randomUUID } from 'crypto';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { s3 } from '~/utils/s3';
@@ -15,10 +15,36 @@ export const wordRouter = createTRPCRouter({
 					id: true,
 					text: true,
 					imgSrc: true,
-					tag: { select: { name: true } },
+					tag: { select: { id: true, name: true } },
 				},
 			}),
 		),
+
+	removeImg: publicProcedure
+		.input(
+			z.object({
+				directory: z.string().min(1),
+				imgKey: z.string().min(1),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ input }) => {
+			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
+				throw new Error('Clave de creación incorrecta.');
+			}
+
+			const key = `${input.directory}${input.imgKey}`;
+
+			const data = await s3.send(
+				new DeleteObjectCommand({
+					Bucket: process.env.AWS_BUCKET_NAME as string,
+					Key: key,
+				}),
+			);
+
+			return data;
+		}),
+
 	createPresignedUrl: publicProcedure
 		.input(
 			z.object({
@@ -43,6 +69,7 @@ export const wordRouter = createTRPCRouter({
 
 			return signedUrl;
 		}),
+
 	create: publicProcedure
 		.input(
 			z.object({
@@ -70,6 +97,34 @@ export const wordRouter = createTRPCRouter({
 					imgSrc: input.imgSrc,
 					tagId: input.tagId,
 					lessonId: input.lessonId,
+				},
+			});
+		}),
+
+	edit: publicProcedure
+		.input(
+			z.object({
+				wordId: z.string().min(1),
+				name: z.string().min(1),
+				imgSrc: z.string().optional(),
+				tagId: z.string().min(1),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
+				throw new Error('Clave de creación incorrecta.');
+			}
+
+			// Check if tagId is valid
+			await ctx.db.tag.findFirstOrThrow({ where: { id: input.tagId } });
+
+			return ctx.db.word.update({
+				where: { id: input.wordId },
+				data: {
+					text: input.name,
+					imgSrc: input.imgSrc,
+					tagId: input.tagId,
 				},
 			});
 		}),

@@ -79,7 +79,7 @@ export function Home() {
 											'flex items-center rounded-xl p-6',
 										)}
 									>
-										<span className="text-3xl font-medium text-white">
+										<span className="text-3xl font-bold text-white">
 											{unit.name}
 										</span>
 									</div>

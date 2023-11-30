@@ -34,9 +34,7 @@ export function Word() {
 							<h1 className="text-2xl">{data.text}</h1>
 						</div>
 
-						<div className="space-x-2">
-							<EditWordModal word={data} />
-						</div>
+						<EditWordModal word={data} />
 					</header>
 
 					<div className="h-64 overflow-hidden rounded-lg bg-brand-100">

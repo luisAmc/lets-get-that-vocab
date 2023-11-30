@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure } from '../trpc';
 import { QuestionType } from '@prisma/client';
 import { z } from 'zod';
+import { checkCreateAccessKey } from '~/utils/checkCreateAccessKey';
 
 export const lessonRouter = createTRPCRouter({
 	get: publicProcedure
@@ -12,6 +13,7 @@ export const lessonRouter = createTRPCRouter({
 					id: true,
 					name: true,
 					words: true,
+					availableQuestionTypes: true,
 				},
 			});
 		}),
@@ -26,9 +28,7 @@ export const lessonRouter = createTRPCRouter({
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
-				throw new Error('Clave de creación incorrecta.');
-			}
+			checkCreateAccessKey(input.createAccessKey);
 
 			// Check if unitId is valid
 			await ctx.db.unit.findUniqueOrThrow({ where: { id: input.unitId } });
@@ -40,6 +40,31 @@ export const lessonRouter = createTRPCRouter({
 			return ctx.db.lesson.create({
 				data: {
 					unitId: input.unitId,
+					name: input.name,
+					availableQuestionTypes,
+				},
+			});
+		}),
+
+	edit: publicProcedure
+		.input(
+			z.object({
+				lessonId: z.string().min(1),
+				name: z.string().min(1),
+				questionTypes: z.array(z.string()).min(1),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			checkCreateAccessKey(input.createAccessKey);
+
+			const availableQuestionTypes = input.questionTypes.map(
+				(type) => QuestionType[type as keyof typeof QuestionType],
+			);
+
+			return ctx.db.lesson.update({
+				where: { id: input.lessonId },
+				data: {
 					name: input.name,
 					availableQuestionTypes,
 				},

@@ -1,6 +1,6 @@
-import { CreateLessonForm } from './CreateLessonForm';
 import { RouterOutputs } from '~/utils/api';
 import Link from 'next/link';
+import { CreateLessonForm } from '../Lesson/CreateLessonForm';
 
 interface UnitProps {
 	unit: RouterOutputs['unit']['getAll'][number];

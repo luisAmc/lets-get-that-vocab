@@ -1,11 +1,11 @@
 import { api } from '~/utils/api';
-import { Button } from '../shared/Button';
-import { Form, useZodForm } from '../shared/Form';
-import { Input } from '../shared/Input';
-import { Modal, useModal } from '../shared/Modal';
+import { Button } from '../../shared/Button';
+import { Form, useZodForm } from '../../shared/Form';
+import { Input } from '../../shared/Input';
+import { Modal, useModal } from '../../shared/Modal';
 import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
-import { RadioButtonGroup } from '../shared/RadioButtonGroup';
-import { SubmitButton } from '../shared/SubmitButton';
+import { RadioButtonGroup } from '../../shared/RadioButtonGroup';
+import { SubmitButton } from '../../shared/SubmitButton';
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { z } from 'zod';
@@ -13,8 +13,8 @@ import {
 	ACCEPTED_IMAGE_TYPES,
 	Dropzone,
 	MAX_FILE_SIZE,
-} from '../shared/Dropzone';
-import { ErrorMessage } from '../shared/ErrorMessage';
+} from '../../shared/Dropzone';
+import { ErrorMessage } from '../../shared/ErrorMessage';
 
 export async function uploadFile(signedUrl: string, imageFile: File) {
 	await fetch(signedUrl, {

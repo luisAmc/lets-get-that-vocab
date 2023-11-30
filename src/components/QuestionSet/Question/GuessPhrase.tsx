@@ -67,11 +67,8 @@ export function GuessPhrase({ questionIndex }: GuessPhraseProps) {
 					/>
 				</div> */}
 
-				<div className="h-42 w-full bg-gray-300 sm:aspect-square sm:h-auto">
-					<img
-						className="h-full sm:aspect-square sm:w-full sm:object-cover"
-						src={question.word.imgSrc}
-					/>
+				<div className="flex justify-center w-full bg-gray-300">
+					<img className="h-48" src={question.word.imgSrc} />
 				</div>
 
 				{/* <div className="h-42 w-full bg-gray-300 sm:aspect-square sm:h-auto">

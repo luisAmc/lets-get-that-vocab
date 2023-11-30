@@ -1,16 +1,16 @@
-import { Button } from '../shared/Button';
-import { Checkbox } from '../shared/Checkbox';
-import { FieldError, Form, useZodForm } from '../shared/Form';
-import { Input } from '../shared/Input';
-import { Modal, useModal } from '../shared/Modal';
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import { SubmitButton } from '../shared/SubmitButton';
-import { z } from 'zod';
-import { api } from '~/utils/api';
+import { PencilIcon } from '@heroicons/react/24/outline';
 import { QuestionType } from '@prisma/client';
-import { ErrorMessage } from '../shared/ErrorMessage';
+import { z } from 'zod';
+import { Button } from '~/components/shared/Button';
+import { Checkbox } from '~/components/shared/Checkbox';
+import { ErrorMessage } from '~/components/shared/ErrorMessage';
+import { FieldError, Form, useZodForm } from '~/components/shared/Form';
+import { Input } from '~/components/shared/Input';
+import { Modal, useModal } from '~/components/shared/Modal';
+import { SubmitButton } from '~/components/shared/SubmitButton';
+import { RouterOutputs, api } from '~/utils/api';
 
-const createLessonSchema = z
+const editLessonSchema = z
 	.object({
 		name: z.string().min(1, 'Ingrese el nombre de la lección.'),
 		selectImage: z.boolean(),
@@ -31,29 +31,49 @@ const createLessonSchema = z
 		},
 	);
 
-interface CreateLessonFormProps {
-	unitId: string;
+interface EditLessonModalProps {
+	lesson: RouterOutputs['lesson']['get'];
 }
 
-export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
-	const form = useZodForm({ schema: createLessonSchema });
+export function EditLessonModal({ lesson }: EditLessonModalProps) {
+	const form = useZodForm({
+		schema: editLessonSchema,
+		defaultValues: {
+			name: lesson.name,
+			selectImage: lesson.availableQuestionTypes.includes(
+				QuestionType.SELECT_IMAGE,
+			),
+			selectName: lesson.availableQuestionTypes.includes(
+				QuestionType.SELECT_NAME,
+			),
+			selectPhrase: lesson.availableQuestionTypes.includes(
+				QuestionType.SELECT_PHRASE,
+			),
+			inputName: lesson.availableQuestionTypes.includes(
+				QuestionType.INPUT_NAME,
+			),
+		},
+	});
 
-	const createModal = useModal();
+	const editModal = useModal();
 
 	const trpcContext = api.useUtils();
 
-	const createLessonMutation = api.lesson.create.useMutation({
+	const editLessonMutation = api.lesson.edit.useMutation({
 		onSuccess: () => {
 			trpcContext.unit.getAll.invalidate();
+			trpcContext.lesson.get.invalidate({ id: lesson.id });
+
 			form.reset();
-			createModal.close();
+
+			editModal.close();
 		},
 		onError: () => {
 			form.reset(form.getValues());
 		},
 	});
 
-	async function handleSubmit(input: z.infer<typeof createLessonSchema>) {
+	async function handleSubmit(input: z.infer<typeof editLessonSchema>) {
 		const questionTypes = [];
 
 		if (input.selectImage) questionTypes.push(QuestionType.SELECT_IMAGE);
@@ -61,8 +81,8 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 		if (input.selectPhrase) questionTypes.push(QuestionType.SELECT_PHRASE);
 		if (input.inputName) questionTypes.push(QuestionType.INPUT_NAME);
 
-		createLessonMutation.mutateAsync({
-			unitId: unitId,
+		editLessonMutation.mutateAsync({
+			lessonId: lesson.id,
 			name: input.name,
 			questionTypes,
 			createAccessKey: input.createAccessKey,
@@ -71,16 +91,15 @@ export function CreateLessonForm({ unitId }: CreateLessonFormProps) {
 
 	return (
 		<>
-			<Button variant="secondary" onClick={createModal.open}>
-				<PlusCircleIcon className="h-4 w-4" />
-				<span>Añadir una lección</span>
+			<Button variant="secondary" size="icon" onClick={editModal.open}>
+				<PencilIcon className="h-5 w-5" />
 			</Button>
 
-			<Modal {...createModal.props} title="Nueva Lección">
+			<Modal {...editModal.props} title="Editar Lección">
 				<Form form={form} onSubmit={handleSubmit}>
 					<ErrorMessage
 						title="No se pudo crear la unidad"
-						error={createLessonMutation.error?.message}
+						error={editLessonMutation.error?.message}
 					/>
 
 					<Input {...form.register('name')} label="Nombre" />

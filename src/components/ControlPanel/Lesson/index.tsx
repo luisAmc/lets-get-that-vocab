@@ -1,9 +1,10 @@
 import { api } from '~/utils/api';
-import { Button } from '../shared/Button';
+import { Button } from '~/components/shared/Button';
 import { ChevronLeftIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
-import { CreateWordForm } from './CreateWordForm';
-import { Page } from '../shared/Page';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
+import { CreateWordModal } from '../Word/CreateWordModal';
+import { EditLessonModal } from './EditLessonModal';
+import { Page } from '~/components/shared/Page';
+import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -12,7 +13,7 @@ export function Lesson() {
 
 	const { data } = api.lesson.get.useQuery(
 		{ id: router.query.lessonId as string },
-		{ enabled: !!router.isReady, staleTime: Infinity },
+		{ enabled: !!router.isReady },
 	);
 
 	const words = data?.words ?? [];
@@ -30,9 +31,7 @@ export function Lesson() {
 							<h1 className="text-2xl">{data.name}</h1>
 						</div>
 
-						{/* <Button variant="destructive" size="icon">
-							<TrashIcon className="h-5 w-5" />
-						</Button> */}
+						<EditLessonModal lesson={data} />
 					</header>
 
 					<section>
@@ -58,7 +57,7 @@ export function Lesson() {
 								</div>
 							)}
 
-							<CreateWordForm />
+							<CreateWordModal />
 						</div>
 					</section>
 				</article>

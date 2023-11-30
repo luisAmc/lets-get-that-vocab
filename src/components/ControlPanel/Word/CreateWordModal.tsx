@@ -1,11 +1,11 @@
 import { api } from '~/utils/api';
-import { Button } from '../shared/Button';
-import { Form, useZodForm } from '../shared/Form';
-import { Input } from '../shared/Input';
-import { Modal, useModal } from '../shared/Modal';
+import { Button } from '../../shared/Button';
+import { Form, useZodForm } from '../../shared/Form';
+import { Input } from '../../shared/Input';
+import { Modal, useModal } from '../../shared/Modal';
 import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
-import { RadioButtonGroup } from '../shared/RadioButtonGroup';
-import { SubmitButton } from '../shared/SubmitButton';
+import { RadioButtonGroup } from '../../shared/RadioButtonGroup';
+import { SubmitButton } from '../../shared/SubmitButton';
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { z } from 'zod';
@@ -13,10 +13,10 @@ import {
 	ACCEPTED_IMAGE_TYPES,
 	Dropzone,
 	MAX_FILE_SIZE,
-} from '../shared/Dropzone';
-import { ErrorMessage } from '../shared/ErrorMessage';
+} from '../../shared/Dropzone';
+import { ErrorMessage } from '../../shared/ErrorMessage';
 
-async function uploadFile(signedUrl: string, imageFile: File) {
+export async function uploadFile(signedUrl: string, imageFile: File) {
 	await fetch(signedUrl, {
 		method: 'PUT',
 		body: imageFile,
@@ -41,7 +41,7 @@ const createWordSchema = z.object({
 	createAccessKey: z.string().min(1, 'Ingrese la clave de creación.'),
 });
 
-export function CreateWordForm() {
+export function CreateWordModal() {
 	const router = useRouter();
 	const lessonId = router.query.lessonId as string;
 
@@ -132,7 +132,7 @@ export function CreateWordForm() {
 
 					<SubmitButton>
 						<CheckCircleIcon className="mr-1 h-4 w-4" />
-						<span>Crear palabra / frase</span>
+						<span>Crear</span>
 					</SubmitButton>
 				</Form>
 			</Modal>

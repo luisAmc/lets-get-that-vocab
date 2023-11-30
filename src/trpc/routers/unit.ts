@@ -1,15 +1,16 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
+import { checkCreateAccessKey } from '~/utils/checkCreateAccessKey';
 
 export const unitRouter = createTRPCRouter({
 	getAll: publicProcedure.query(async ({ ctx }) => {
-		// await new Promise((resolve) => setTimeout(resolve, 3000));
-
 		return ctx.db.unit.findMany({
+			orderBy: { createdAt: 'asc' },
 			select: {
 				id: true,
 				name: true,
 				lessons: {
+					orderBy: { createdAt: 'asc' },
 					select: {
 						id: true,
 						name: true,
@@ -25,14 +26,34 @@ export const unitRouter = createTRPCRouter({
 
 	create: publicProcedure
 		.input(
-			z.object({ name: z.string().min(1), createAccessKey: z.string().min(1) }),
+			z.object({
+				name: z.string().min(1),
+				createAccessKey: z.string().min(1),
+			}),
 		)
 		.mutation(async ({ ctx, input }) => {
-			if (input.createAccessKey !== process.env.CREATE_ACCESS_KEY) {
-				throw new Error('Clave de creación incorrecta.');
-			}
+			checkCreateAccessKey(input.createAccessKey);
 
 			return ctx.db.unit.create({
+				data: {
+					name: input.name,
+				},
+			});
+		}),
+
+	edit: publicProcedure
+		.input(
+			z.object({
+				unitId: z.string().min(1),
+				name: z.string().min(1),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			checkCreateAccessKey(input.createAccessKey);
+
+			return ctx.db.unit.update({
+				where: { id: input.unitId },
 				data: {
 					name: input.name,
 				},

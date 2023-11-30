@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router';
 import { api } from '~/utils/api';
-import { Page } from '../shared/Page';
-import { Button } from '../shared/Button';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
+import { Button } from '~/components/shared/Button';
+import { Page } from '~/components/shared/Page';
+import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
+import { EditWordModal } from './EditWordModal';
 
 export function Word() {
 	const router = useRouter();
@@ -32,6 +33,8 @@ export function Word() {
 
 							<h1 className="text-2xl">{data.text}</h1>
 						</div>
+
+						<EditWordModal word={data} />
 					</header>
 
 					<div className="h-64 overflow-hidden rounded-lg bg-brand-100">
@@ -54,3 +57,5 @@ export function Word() {
 		</Page>
 	);
 }
+
+function EditModal() {}

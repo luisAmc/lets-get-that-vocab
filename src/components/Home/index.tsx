@@ -69,14 +69,21 @@ export function Home() {
 							.map((unit, unitIndex) => (
 								<section
 									key={unit.id}
-									className="flex w-full flex-col rounded-xl bg-white"
+									className={cn(
+										'flex w-full flex-col overflow-hidden rounded-xl border',
+										[
+											'border-green-200',
+											'border-purple-200',
+											'border-teal-200',
+										][unitIndex % 3],
+									)}
 								>
 									<div
 										className={cn(
 											['bg-green-400', 'bg-purple-400', 'bg-teal-400'][
 												unitIndex % 3
 											],
-											'flex items-center rounded-xl p-6',
+											'flex items-center rounded-t-xl p-6',
 										)}
 									>
 										<span className="text-3xl font-bold text-white">
@@ -85,7 +92,14 @@ export function Home() {
 									</div>
 
 									<AnimatePresence>
-										<div className="flex flex-col items-center justify-center gap-y-4 py-4">
+										<div
+											className={cn(
+												'flex flex-col items-center justify-center gap-y-4 py-4',
+												['bg-green-100', 'bg-purple-100', 'bg-teal-100'][
+													unitIndex % 3
+												],
+											)}
+										>
 											{unit.lessons
 												.filter((lesson) => lesson._count.words > 0)
 												.map((lesson, lessonIndex) => (

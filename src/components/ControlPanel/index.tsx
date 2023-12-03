@@ -23,6 +23,10 @@ export function WordCreation() {
 
 							<h1 className="text-2xl">Unidades</h1>
 						</div>
+
+						<Button variant="secondary" href="/control-panel/tags">
+							Etiquetas
+						</Button>
 					</header>
 
 					<section className="flex flex-col gap-y-4">

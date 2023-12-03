@@ -33,7 +33,11 @@ export function Tags() {
 
 					<section className="flex w-full flex-col divide-y rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 						{tags.length > 0 ? (
-							tags.map((tag) => <div className="py-2 text-sm">{tag.name}</div>)
+							tags.map((tag) => (
+								<div key={tag.id} className="py-2 text-sm">
+									{tag.name}
+								</div>
+							))
 						) : (
 							<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
 								No se han creado etiquetas todavía.

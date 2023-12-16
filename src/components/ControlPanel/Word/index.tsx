@@ -57,5 +57,3 @@ export function Word() {
 		</Page>
 	);
 }
-
-function EditModal() {}

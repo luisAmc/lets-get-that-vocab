@@ -12,10 +12,10 @@ import { Modal, useModal } from '~/components/shared/Modal';
 import { RadioButtonGroup } from '~/components/shared/RadioButtonGroup';
 import { RouterOutputs, api } from '~/utils/api';
 import { SubmitButton } from '~/components/shared/SubmitButton';
-import { uploadFile } from './CreateWordModal';
 import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { z } from 'zod';
+import { uploadFile } from '~/utils/uploadFile';
 
 const editWordSchema = z.object({
 	name: z.string().min(1, 'Ingrese la palabra o frase.'),
@@ -66,7 +66,7 @@ export function EditWordModal({ word }: EditWordModalProps) {
 		},
 	});
 
-	const createSignedMutation = api.word.createPresignedUrl.useMutation({
+	const createSignedMutation = api.file.createPresignedUrl.useMutation({
 		onError: () => {
 			form.reset(form.getValues());
 		},

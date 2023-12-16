@@ -64,3 +64,14 @@ model Word {
   tag   Tag    @relation(fields: [tagId], references: [id])
   tagId String
 }
+
+model Note {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date            DateTime
+  name            String
+  adittionalNotes String?
+  fileSrc         String
+}

@@ -1,15 +1,17 @@
 import { api } from '~/utils/api';
-import { Button } from '../shared/Button';
+import { Button } from '../../shared/Button';
 import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { dateFromString } from '~/utils/transforms';
-import { ErrorMessage } from '../shared/ErrorMessage';
-import { Form, useZodForm } from '../shared/Form';
-import { Input } from '../shared/Input';
-import { Modal, useModal } from '../shared/Modal';
-import { SubmitButton } from '../shared/SubmitButton';
-import { Textarea } from '../shared/Textarea';
+import { ErrorMessage } from '../../shared/ErrorMessage';
+import { Form, useZodForm } from '../../shared/Form';
+import { Input } from '../../shared/Input';
+import { Modal, useModal } from '../../shared/Modal';
+import { SubmitButton } from '../../shared/SubmitButton';
+import { Textarea } from '../../shared/Textarea';
 import { uploadFile } from '~/utils/uploadFile';
 import { z } from 'zod';
+import { Search } from '~/components/shared/Search';
+import { useMemo } from 'react';
 
 const MAX_FILE_SIZE = 1 * 1000 * 1000 * 10; //10MB
 
@@ -22,10 +24,12 @@ const createNoteSchema = z.object({
 	media: z
 		.any()
 		.refine((files) => (files?.[0] as File)?.size <= MAX_FILE_SIZE)
-		.refine((files) => {
-			console.log({ files });
-			return ACCEPTED_FILE_TYPES.includes(files?.[0]?.type);
-		}, 'Solo se soportan formatos .pdf'),
+		.refine(
+			(files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type),
+			'Solo se soportan formatos .pdf',
+		),
+	videoSrc: z.string().optional(),
+	relatedLessonId: z.string().optional(),
 	createAccessKey: z.string().min(1, 'Ingrese la clave de creación.'),
 });
 
@@ -33,6 +37,18 @@ export function CreateNoteModal() {
 	const createModal = useModal();
 
 	const form = useZodForm({ schema: createNoteSchema });
+	const lessonsQuery = api.lesson.getAll.useQuery();
+
+	const lessonOptions = useMemo(() => {
+		if (!lessonsQuery.data) {
+			return [];
+		}
+
+		return lessonsQuery.data.map((lesson) => ({
+			label: lesson.name,
+			value: lesson.id,
+		}));
+	}, [lessonsQuery.data]);
 
 	const createSignedMutation = api.file.createPresignedUrl.useMutation({
 		onError: () => {
@@ -69,6 +85,8 @@ export function CreateNoteModal() {
 			date: dateFromString(dateString),
 			adittionalNotes: input.adittionalNotes,
 			fileSrc: fileSrc,
+			videoSrc: input.videoSrc,
+			relatedLessonId: input.relatedLessonId,
 			createAccessKey: input.createAccessKey,
 		});
 	}
@@ -99,6 +117,17 @@ export function CreateNoteModal() {
 						label="Media (PDF)"
 						type="file"
 						accept="application/pdf"
+					/>
+
+					<Input
+						{...form.register('videoSrc')}
+						label="Link de video de clase (Opcional)"
+					/>
+
+					<Search
+						{...form.register('relatedLessonId')}
+						label="Lección relacionada (Opcional)"
+						options={lessonOptions}
 					/>
 
 					<Textarea

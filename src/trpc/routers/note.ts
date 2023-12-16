@@ -24,11 +24,19 @@ export const noteRouter = createTRPCRouter({
 				date: z.date(),
 				adittionalNotes: z.string().optional(),
 				fileSrc: z.string().min(1),
+				videoSrc: z.string().optional(),
+				relatedLessonId: z.string().optional(),
 				createAccessKey: z.string().min(1),
 			}),
 		)
 		.mutation(async ({ ctx, input }) => {
 			checkCreateAccessKey(input.createAccessKey);
+
+			if (input.relatedLessonId) {
+				await ctx.db.lesson.findUniqueOrThrow({
+					where: { id: input.relatedLessonId },
+				});
+			}
 
 			return ctx.db.note.create({
 				data: {
@@ -36,6 +44,8 @@ export const noteRouter = createTRPCRouter({
 					date: input.date,
 					adittionalNotes: input.adittionalNotes,
 					fileSrc: input.fileSrc,
+					videoSrc: input.videoSrc,
+					relatedLessonId: input.relatedLessonId,
 				},
 			});
 		}),

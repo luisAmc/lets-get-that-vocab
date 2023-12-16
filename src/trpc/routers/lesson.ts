@@ -4,6 +4,15 @@ import { z } from 'zod';
 import { checkCreateAccessKey } from '~/utils/checkCreateAccessKey';
 
 export const lessonRouter = createTRPCRouter({
+	getAll: publicProcedure.query(async ({ ctx }) => {
+		return ctx.db.lesson.findMany({
+			select: {
+				id: true,
+				name: true,
+			},
+		});
+	}),
+
 	get: publicProcedure
 		.input(z.object({ id: z.string().min(1) }))
 		.query(async ({ ctx, input }) => {

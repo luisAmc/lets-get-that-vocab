@@ -1,12 +1,12 @@
 import { api } from '~/utils/api';
 import { Button } from '../shared/Button';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
-import { CreateNoteModal } from '../Notes/CreateNoteModal';
+import { CreateNoteModal } from './Note/CreateNoteModal';
 import { CreateUnitModal } from './Unit/CreateUnitModal';
-import { formatDate } from '~/utils/transforms';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { Unit } from './Unit';
+import { Note } from './Note';
 
 export function WordCreation() {
 	const unitsQuery = api.unit.getAll.useQuery();
@@ -64,15 +64,7 @@ export function WordCreation() {
 							<CreateNoteModal />
 
 							{notes.length > 0 ? (
-								notes.map((note) => (
-									<div
-										key={note.id}
-										className="flex items-center justify-between rounded-lg bg-brand-100 px-4 py-3"
-									>
-										<span>{note.name}</span>
-										<span className="text-sm">{formatDate(note.date)}</span>
-									</div>
-								))
+								notes.map((note) => <Note key={note.id} note={note} />)
 							) : (
 								<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
 									No se han creado notas todavía.

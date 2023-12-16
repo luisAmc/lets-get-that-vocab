@@ -58,9 +58,9 @@ function NoteList({ notes }: NoteListProps) {
 					</div>
 
 					<div className="mt-2">
-						<div className="mt-1 rounded-lg bg-brand-200 p-4 text-sm transition-colors ease-out group-hover:bg-brand-300">
+						<pre className="mt-1 rounded-lg bg-brand-200 p-4 text-sm text-brand-700 transition-colors ease-out group-hover:bg-brand-300">
 							{note.adittionalNotes}
-						</div>
+						</pre>
 					</div>
 				</a>
 			))}
@@ -74,19 +74,32 @@ function EmptyNoteList() {
 
 function Skeleton() {
 	return (
-		<div className="flex animate-pulse flex-col overflow-hidden rounded-xl bg-brand-100">
-			<div className="h-20 rounded-xl bg-brand-200"></div>
+		<div className="animate-pulse space-y-2">
+			<div className="space-y-2  rounded-xl bg-brand-100 p-4">
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-40 rounded-lg bg-brand-200"></div>
+					<div className="h-4 w-32 rounded-lg bg-brand-200"></div>
+				</div>
 
-			<div className="flex flex-col items-center space-y-4 p-4">
-				<div className="h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+				<div className="h-32 rounded-lg bg-brand-200"></div>
+			</div>
 
-				<div className="-ml-[100px] h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+			<div className="space-y-2  rounded-xl bg-brand-100 p-4">
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-40 rounded-lg bg-brand-200"></div>
+					<div className="h-4 w-32 rounded-lg bg-brand-200"></div>
+				</div>
 
-				<div className="h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+				<div className="h-32 rounded-lg bg-brand-200"></div>
+			</div>
 
-				<div className="ml-[100px] h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+			<div className="space-y-2  rounded-xl bg-brand-100 p-4">
+				<div className="flex items-center justify-between">
+					<div className="h-8 w-40 rounded-lg bg-brand-200"></div>
+					<div className="h-4 w-32 rounded-lg bg-brand-200"></div>
+				</div>
 
-				<div className="h-16 w-36 rounded-full border-b-8 border-brand-300 bg-brand-200"></div>
+				<div className="h-32 rounded-lg bg-brand-200"></div>
 			</div>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { BookOpenIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { Button } from '../shared/Button';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
@@ -69,7 +69,14 @@ function NoteList({ notes }: NoteListProps) {
 }
 
 function EmptyNoteList() {
-	return <section>EmptyNoteList</section>;
+	return (
+		<section className="flex flex-col items-center justify-center gap-y-2 rounded-xl border border-brand-300 bg-brand-50 p-8 text-brand-600">
+			<BookOpenIcon className="h-14 w-14 stroke-1" />
+			<span className="text-sm font-medium">
+				No se han creado notas hasta el momento.
+			</span>
+		</section>
+	);
 }
 
 function Skeleton() {

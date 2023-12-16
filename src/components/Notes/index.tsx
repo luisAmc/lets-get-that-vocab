@@ -2,7 +2,6 @@ import { BookOpenIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { Button } from '../shared/Button';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
-import { CreateNoteModal } from './CreateNoteModal';
 import { RouterOutputs, api } from '~/utils/api';
 import { formatDate } from '~/utils/transforms';
 
@@ -22,8 +21,6 @@ export function Notes() {
 
 						<h1 className="text-2xl">Notas</h1>
 					</div>
-
-					<CreateNoteModal />
 				</header>
 
 				{isLoading && <Skeleton />}

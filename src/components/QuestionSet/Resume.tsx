@@ -69,9 +69,9 @@ export function Resume() {
 
 			<div className="flex-1"></div>
 
-			<Button href="/" size="xl" className="w-full">
+			<Button href="/practice" size="xl" className="w-full">
 				<ArrowPathIcon className="mr-2 h-5 w-5" />
-				<span>Regresar al inicio</span>
+				<span>Entendido</span>
 			</Button>
 		</div>
 	);

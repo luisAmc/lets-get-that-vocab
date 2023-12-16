@@ -1,14 +1,15 @@
-import { z } from 'zod';
-import { Form, useZodForm } from '../shared/Form';
-import { Button } from '../shared/Button';
-import { Modal, useModal } from '../shared/Modal';
-import { ErrorMessage } from '../shared/ErrorMessage';
-import { Input } from '../shared/Input';
-import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
-import { SubmitButton } from '../shared/SubmitButton';
 import { api } from '~/utils/api';
-import { uploadFile } from '~/utils/uploadFile';
+import { Button } from '../shared/Button';
+import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { dateFromString } from '~/utils/transforms';
+import { ErrorMessage } from '../shared/ErrorMessage';
+import { Form, useZodForm } from '../shared/Form';
+import { Input } from '../shared/Input';
+import { Modal, useModal } from '../shared/Modal';
+import { SubmitButton } from '../shared/SubmitButton';
+import { Textarea } from '../shared/Textarea';
+import { uploadFile } from '~/utils/uploadFile';
+import { z } from 'zod';
 
 const MAX_FILE_SIZE = 1 * 1000 * 1000 * 10; //10MB
 
@@ -94,15 +95,15 @@ export function CreateNoteModal() {
 					<Input {...form.register('date')} label="Fecha" type="date" />
 
 					<Input
-						{...form.register('adittionalNotes')}
-						label="Notas adicionales (Opcional)"
-					/>
-
-					<Input
 						{...form.register('media')}
 						label="Media (PDF)"
 						type="file"
 						accept="application/pdf"
+					/>
+
+					<Textarea
+						{...form.register('adittionalNotes')}
+						label="Notas adicionales (Opcional)"
 					/>
 
 					<Input

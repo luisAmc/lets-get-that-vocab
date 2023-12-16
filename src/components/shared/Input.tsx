@@ -7,6 +7,7 @@ export const inputVariants = cva([
 	'focus:border-brand-200 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-white focus:ring-offset-2',
 	'disabled:opacity-60 disabled:pointer-events-none',
 	'hover:bg-opacity-80 appearance-none transition ease-in-out',
+	'file:border-0 file:bg-transparent file:text-sm file:font-medium',
 ]);
 
 interface InputProps

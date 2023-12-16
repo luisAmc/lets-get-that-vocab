@@ -15,18 +15,7 @@ import {
 	MAX_FILE_SIZE,
 } from '../../shared/Dropzone';
 import { ErrorMessage } from '../../shared/ErrorMessage';
-
-export async function uploadFile(signedUrl: string, imageFile: File) {
-	await fetch(signedUrl, {
-		method: 'PUT',
-		body: imageFile,
-		headers: {
-			'Content-Type': imageFile.type,
-		},
-	});
-
-	return signedUrl.split('?')[0];
-}
+import { uploadFile } from '~/utils/uploadFile';
 
 const createWordSchema = z.object({
 	name: z.string().min(1, 'Ingrese la palabra o frase.'),
@@ -64,7 +53,7 @@ export function CreateWordModal() {
 
 	const trpcContext = api.useUtils();
 
-	const createSignedMutation = api.word.createPresignedUrl.useMutation({
+	const createSignedMutation = api.file.createPresignedUrl.useMutation({
 		onError: () => {
 			form.reset(form.getValues());
 		},

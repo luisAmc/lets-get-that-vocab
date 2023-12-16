@@ -44,29 +44,6 @@ export const wordRouter = createTRPCRouter({
 			return data;
 		}),
 
-	createPresignedUrl: publicProcedure
-		.input(
-			z.object({
-				directory: z.string().min(1),
-				ext: z.string().min(1),
-				createAccessKey: z.string().min(1),
-			}),
-		)
-		.mutation(async ({ input }) => {
-			checkCreateAccessKey(input.createAccessKey);
-
-			const key = `${input.directory}${randomUUID()}.${input.ext}`;
-
-			const command = new PutObjectCommand({
-				Bucket: process.env.AWS_BUCKET_NAME as string,
-				Key: key,
-			});
-
-			const signedUrl = await getSignedUrl(s3, command);
-
-			return signedUrl;
-		}),
-
 	create: publicProcedure
 		.input(
 			z.object({

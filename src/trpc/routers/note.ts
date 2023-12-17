@@ -12,6 +12,17 @@ export const noteRouter = createTRPCRouter({
 				date: true,
 				adittionalNotes: true,
 				fileSrc: true,
+				videoSrc: true,
+				relatedLesson: {
+					select: {
+						id: true,
+						name: true,
+						availableQuestionTypes: true,
+						_count: {
+							select: { words: true },
+						},
+					}
+				},
 				createdAt: true,
 			},
 		});
@@ -45,7 +56,7 @@ export const noteRouter = createTRPCRouter({
 					adittionalNotes: input.adittionalNotes,
 					fileSrc: input.fileSrc,
 					videoSrc: input.videoSrc,
-					relatedLessonId: input.relatedLessonId,
+					relatedLessonId: input.relatedLessonId || null,
 				},
 			});
 		}),

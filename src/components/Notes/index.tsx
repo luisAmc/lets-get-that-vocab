@@ -1,9 +1,9 @@
+import { api } from '~/utils/api';
 import { BookOpenIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { Button } from '../shared/Button';
+import { NoteList } from './NoteList';
 import { Page } from '../shared/Page';
 import { PrivacyScreen } from '../shared/PrivacyScreen';
-import { RouterOutputs, api } from '~/utils/api';
-import { formatDate } from '~/utils/transforms';
 
 export function Notes() {
 	const { data, isLoading } = api.note.getAll.useQuery();
@@ -31,37 +31,6 @@ export function Notes() {
 
 			<PrivacyScreen />
 		</Page>
-	);
-}
-
-interface NoteListProps {
-	notes: RouterOutputs['note']['getAll'];
-}
-
-function NoteList({ notes }: NoteListProps) {
-	return (
-		<section className="flex flex-col gap-y-2">
-			{notes.map((note) => (
-				<a
-					href={note.fileSrc}
-					target="_blank"
-					key={note.id}
-					className="group rounded-xl bg-brand-100 px-4 py-3 transition-colors ease-out hover:cursor-pointer hover:bg-brand-200 hover:shadow-sm"
-				>
-					<div className="flex w-full items-center justify-between">
-						<span className="text-xl font-medium">{note.name}</span>
-
-						<span className="text-xs">{formatDate(note.date)}</span>
-					</div>
-
-					<div className="mt-2">
-						<pre className="mt-1 rounded-lg bg-brand-200 p-4 text-sm text-brand-700 transition-colors ease-out group-hover:bg-brand-300">
-							{note.adittionalNotes}
-						</pre>
-					</div>
-				</a>
-			))}
-		</section>
 	);
 }
 

@@ -1,5 +1,4 @@
 import { ComponentPropsWithRef, forwardRef, useMemo, useState } from 'react';
-import { useController } from 'react-hook-form';
 import { FieldError } from './Form';
 
 interface SearchProps extends ComponentPropsWithRef<'select'> {
@@ -24,12 +23,7 @@ export const Search = forwardRef<HTMLSelectElement, SearchProps>(
 						.includes(query.toLowerCase().replace(/\s+/g, '')),
 				) ?? []
 			);
-		}, [query]);
-
-		const { field } = useController({
-			name: props.name as string,
-			defaultValue: null,
-		});
+		}, [query, options]);
 
 		return (
 			<label>

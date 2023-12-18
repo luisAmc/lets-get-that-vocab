@@ -4,7 +4,6 @@ import { Button } from '~/components/shared/Button';
 import { Page } from '~/components/shared/Page';
 import { api } from '~/utils/api';
 import { CreateTagModal } from './CreateTagModal';
-import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
 
 export function Tags() {
 	const router = useRouter();
@@ -46,8 +45,6 @@ export function Tags() {
 					</section>
 				</article>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

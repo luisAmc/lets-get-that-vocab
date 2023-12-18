@@ -1,6 +1,5 @@
 import { cn } from '~/utils/cn';
 import { Page } from '../shared/Page';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
@@ -28,8 +27,6 @@ export function Home() {
 					<span className="text-3xl font-bold text-brand-600">Práctica</span>
 				</Card>
 			</div>
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

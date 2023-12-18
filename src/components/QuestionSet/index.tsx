@@ -1,8 +1,6 @@
 import { AnswerStatus } from './AnswerStatus';
 import { api } from '~/utils/api';
-import { Header } from '../shared/Header';
 import { Page } from '../shared/Page';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { QuestionList } from './Question/QuestionList';
 import { QuestionSetProvider, useQuestionSet } from './QuestionSetContext';
 import { Resume } from './Resume';
@@ -30,8 +28,6 @@ export function QuestionSet() {
 
 	return (
 		<Page>
-			{/* <Header /> */}
-
 			{isLoading && <Skeleton />}
 
 			{data && (
@@ -46,8 +42,6 @@ export function QuestionSet() {
 					</div>
 				</QuestionSetProvider>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

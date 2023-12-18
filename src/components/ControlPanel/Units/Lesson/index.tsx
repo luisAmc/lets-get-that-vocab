@@ -4,7 +4,6 @@ import { ChevronLeftIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
 import { CreateWordModal } from '../Word/CreateWordModal';
 import { EditLessonModal } from './EditLessonModal';
 import { Page } from '~/components/shared/Page';
-import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -62,8 +61,6 @@ export function Lesson() {
 					</section>
 				</article>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

@@ -2,7 +2,6 @@ import { api } from '~/utils/api';
 import { Button } from '~/components/shared/Button';
 import { CreateUnitModal } from './Unit/CreateUnitModal';
 import { Page } from '~/components/shared/Page';
-import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
 import { Unit } from './Unit';
 import { ChevronLeftIcon, TagIcon } from '@heroicons/react/24/outline';
 
@@ -45,8 +44,6 @@ export function Units() {
 					</article>
 				)}
 			</div>
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

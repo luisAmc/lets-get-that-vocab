@@ -2,7 +2,6 @@ import { api } from '~/utils/api';
 import { cn } from '~/utils/cn';
 import { LessonOptionsModal, LessonType } from './LessonOptionsModal';
 import { Page } from '../shared/Page';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { useModal } from '../shared/Modal';
 import { useState } from 'react';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
@@ -109,7 +108,7 @@ export function Practice() {
 																? shiftValues[lessonIndex % shiftValues.length]
 																: shiftValuesReversed[
 																		lessonIndex % shiftValues.length
-																  ]
+																	]
 														}
 														initial="initial"
 														animate="animate"
@@ -146,8 +145,6 @@ export function Practice() {
 					lesson={selectedLesson}
 				/>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

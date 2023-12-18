@@ -3,7 +3,6 @@ import { api } from '~/utils/api';
 import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { Button } from '~/components/shared/Button';
 import { Page } from '~/components/shared/Page';
-import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
 import { EditWordModal } from './EditWordModal';
 
 export function Word() {
@@ -52,8 +51,6 @@ export function Word() {
 					</div>
 				</article>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

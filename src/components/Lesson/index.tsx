@@ -4,7 +4,6 @@ import { api } from '~/utils/api';
 import { Button } from '../shared/Button';
 import { ChevronLeftIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import { Disclosure } from '@headlessui/react';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function Lesson() {
 	const router = useRouter();
@@ -74,8 +73,6 @@ export function Lesson() {
 					</section>
 				</article>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

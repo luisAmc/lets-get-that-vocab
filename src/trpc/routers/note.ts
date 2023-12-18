@@ -5,7 +5,7 @@ import { checkCreateAccessKey } from '~/utils/checkCreateAccessKey';
 export const noteRouter = createTRPCRouter({
 	getAll: publicProcedure.query(async ({ ctx }) => {
 		return ctx.db.note.findMany({
-			orderBy: { createdAt: 'asc' },
+			orderBy: { createdAt: 'desc' },
 			select: {
 				id: true,
 				name: true,

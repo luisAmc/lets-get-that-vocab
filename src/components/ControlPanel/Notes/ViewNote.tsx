@@ -1,4 +1,3 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
 import { Button } from '~/components/shared/Button';
 import { Page } from '~/components/shared/Page';
@@ -14,18 +13,8 @@ export function ViewNote() {
 	);
 
 	return (
-		<Page>
+		<Page to='/control-panel/notes' title="Nota">
 			<div className="space-y-4">
-				<header className="flex items-center justify-between">
-					<div className="flex items-center gap-x-4">
-						<Button variant="secondary" size="icon" href="/control-panel">
-							<ChevronLeftIcon className="h-5 w-5" />
-						</Button>
-
-						<h1 className="text-2xl">Nota</h1>
-					</div>
-				</header>
-
 				{data && (
 					<div className="space-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 						<div className="flex w-full items-center justify-between">
@@ -33,10 +22,18 @@ export function ViewNote() {
 							<span className="text-xs">{formatDate(data.date)}</span>
 						</div>
 
-						<div className="w-full">
-							<pre className="rounded-lg bg-brand-100 p-4 text-sm">
-								{data.adittionalNotes}
-							</pre>
+						<div>
+							<span className="text-sm font-medium">Notas adicionales</span>
+
+							{data.adittionalNotes ? (
+								<pre className="rounded-lg bg-brand-100 p-4 text-sm">
+									{data.adittionalNotes}
+								</pre>
+							) : (
+								<div className="px-4 text-sm font-semibold">
+									No hay notas adicionales.
+								</div>
+							)}
 						</div>
 
 						<div>

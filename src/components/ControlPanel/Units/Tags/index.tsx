@@ -1,6 +1,4 @@
-import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/router';
-import { Button } from '~/components/shared/Button';
 import { Page } from '~/components/shared/Page';
 import { api } from '~/utils/api';
 import { CreateTagModal } from './CreateTagModal';
@@ -15,35 +13,21 @@ export function Tags() {
 	const tags = data ?? [];
 
 	return (
-		<Page>
+		<Page to='/control-panel/units' title="Etiquetas" action={<CreateTagModal />}>
 			{data && (
-				<article>
-					<header className="mb-4 flex items-center justify-between">
-						<div className="flex items-center gap-x-2">
-							<Button variant="secondary" size="icon" href="/control-panel">
-								<ChevronLeftIcon className="h-5 w-5" />
-							</Button>
-
-							<h1 className="text-2xl">Etiquetas</h1>
-						</div>
-
-						<CreateTagModal />
-					</header>
-
-					<section className="flex w-full flex-col divide-y rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
-						{tags.length > 0 ? (
-							tags.map((tag) => (
-								<div key={tag.id} className="py-2 text-sm">
-									{tag.name}
-								</div>
-							))
-						) : (
-							<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
-								No se han creado etiquetas todavía.
+				<section className="flex w-full flex-col divide-y rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
+					{tags.length > 0 ? (
+						tags.map((tag) => (
+							<div key={tag.id} className="py-2 text-sm">
+								{tag.name}
 							</div>
-						)}
-					</section>
-				</article>
+						))
+					) : (
+						<div className="rounded-xl bg-white px-6 py-10 text-center text-sm text-brand-600">
+							No se han creado etiquetas todavía.
+						</div>
+					)}
+				</section>
 			)}
 		</Page>
 	);

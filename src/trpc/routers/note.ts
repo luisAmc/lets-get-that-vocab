@@ -21,12 +21,45 @@ export const noteRouter = createTRPCRouter({
 						_count: {
 							select: { words: true },
 						},
-					}
+					},
 				},
 				createdAt: true,
 			},
 		});
 	}),
+
+	get: publicProcedure
+		.input(z.object({ id: z.string().min(1) }))
+		.query(async ({ ctx, input }) => {
+			return ctx.db.note.findUniqueOrThrow({
+				where: { id: input.id },
+				select: {
+					id: true,
+					name: true,
+					date: true,
+					adittionalNotes: true,
+					fileSrc: true,
+					videoSrc: true,
+					relatedLesson: {
+						select: {
+							id: true,
+							name: true,
+							availableQuestionTypes: true,
+							unit: {
+								select: {
+									id: true,
+									name: true,
+								},
+							},
+							_count: {
+								select: { words: true },
+							},
+						},
+					},
+					createdAt: true,
+				},
+			});
+		}),
 
 	create: publicProcedure
 		.input(

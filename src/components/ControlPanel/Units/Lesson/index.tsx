@@ -23,7 +23,7 @@ export function Lesson() {
 				<article className="flex w-full flex-col gap-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 					<header className="flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
-							<Button variant="secondary" size="icon" href="/control-panel">
+							<Button variant="secondary" size="icon" href="/control-panel/units">
 								<ChevronLeftIcon className="h-5 w-5" />
 							</Button>
 

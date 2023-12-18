@@ -64,13 +64,19 @@ export function NoteCard({ note, onPracticeClick }: NoteCardProps) {
 										variant="secondary"
 										href={note.videoSrc}
 										target="_blank"
+										rel="noopener"
 									>
 										<VideoCameraIcon className="mr-1 h-4 w-4" />
 										<span>Video de clase</span>
 									</Button>
 								)}
 
-								<Button variant="secondary" href={note.fileSrc} target="_blank">
+								<Button
+									variant="secondary"
+									href={note.fileSrc}
+									target="_blank"
+									rel="noopener"
+								>
 									<DocumentTextIcon className="mr-1 h-4 w-4" />
 									<span>Notas (PDF)</span>
 								</Button>

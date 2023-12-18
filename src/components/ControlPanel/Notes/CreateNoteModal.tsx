@@ -93,7 +93,7 @@ export function CreateNoteModal() {
 
 	return (
 		<>
-			<Button variant="secondary" onClick={createModal.open}>
+			<Button onClick={createModal.open}>
 				<PlusCircleIcon className="mr-1 h-4 w-4" />
 				<span>Añadir nota</span>
 			</Button>

@@ -9,6 +9,8 @@ export function Page({ children }: PageProps) {
 	return (
 		<main className="relative mx-auto h-full w-full max-w-lg gap-y-8 px-2 py-4">
 			{children}
+
+			<PrivacyScreen />
 		</main>
 	);
 }

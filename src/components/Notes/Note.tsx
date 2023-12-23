@@ -27,11 +27,18 @@ export function NoteCard({ note, onPracticeClick }: NoteCardProps) {
 								<span className="text-xs">{formatDate(note.date)}</span>
 							</div>
 
-							<div className="w-full">
-								<pre className="rounded-lg bg-brand-200 p-4 text-sm text-brand-700">
-									{note.adittionalNotes}
-								</pre>
-							</div>
+							{note.adittionalNotes ? (
+								<div className="w-full">
+									<pre className="rounded-lg bg-brand-200 p-4 text-sm text-brand-700">
+										{note.adittionalNotes}
+									</pre>
+								</div>
+							) : (
+								<div className="flex items-center gap-x-1 text-xs font-medium text-brand-600">
+									<DocumentTextIcon className="size-3" />
+									<span>No hay notas adicionales.</span>
+								</div>
+							)}
 
 							<div className="flex w-full items-center justify-evenly space-x-2">
 								<span className="w-full border-b border-solid border-brand-300"></span>
@@ -48,7 +55,7 @@ export function NoteCard({ note, onPracticeClick }: NoteCardProps) {
 									variant="secondary"
 									onClick={() => onPracticeClick(note.relatedLesson)}
 								>
-									<SparklesIcon className="mr-1 h-4 w-4" />
+									<SparklesIcon className="mr-1 size-4" />
 									<span>Prácticar</span>
 								</Button>
 							)}
@@ -66,7 +73,7 @@ export function NoteCard({ note, onPracticeClick }: NoteCardProps) {
 										target="_blank"
 										rel="noopener"
 									>
-										<VideoCameraIcon className="mr-1 h-4 w-4" />
+										<VideoCameraIcon className="mr-1 size-4" />
 										<span>Video de clase</span>
 									</Button>
 								)}
@@ -77,9 +84,25 @@ export function NoteCard({ note, onPracticeClick }: NoteCardProps) {
 									target="_blank"
 									rel="noopener"
 								>
-									<DocumentTextIcon className="mr-1 h-4 w-4" />
+									<DocumentTextIcon className="mr-1 size-4" />
 									<span>Notas (PDF)</span>
 								</Button>
+							</div>
+
+							<div className="text-left text-xs font-medium text-brand-600">
+								{!note.relatedLesson && (
+									<div className="flex items-center gap-x-1">
+										<SparklesIcon className="size-3" />
+										<span>No hay una práctica relacionada.</span>
+									</div>
+								)}
+
+								{!note.videoSrc && (
+									<div className="flex items-center gap-x-1">
+										<VideoCameraIcon className="size-3" />
+										<span>No hay video de clase.</span>
+									</div>
+								)}
 							</div>
 						</Disclosure.Panel>
 					</>

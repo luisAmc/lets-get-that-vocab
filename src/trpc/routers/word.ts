@@ -1,9 +1,5 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
-import { DeleteObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3';
-import { randomUUID } from 'crypto';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { s3 } from '~/utils/s3';
 import { checkCreateAccessKey } from '~/utils/checkCreateAccessKey';
 
 export const wordRouter = createTRPCRouter({
@@ -20,29 +16,6 @@ export const wordRouter = createTRPCRouter({
 				},
 			}),
 		),
-
-	removeImg: publicProcedure
-		.input(
-			z.object({
-				directory: z.string().min(1),
-				imgKey: z.string().min(1),
-				createAccessKey: z.string().min(1),
-			}),
-		)
-		.mutation(async ({ input }) => {
-			checkCreateAccessKey(input.createAccessKey);
-
-			const key = `${input.directory}${input.imgKey}`;
-
-			const data = await s3.send(
-				new DeleteObjectCommand({
-					Bucket: process.env.AWS_BUCKET_NAME as string,
-					Key: key,
-				}),
-			);
-
-			return data;
-		}),
 
 	create: publicProcedure
 		.input(

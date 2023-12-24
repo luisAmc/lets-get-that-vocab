@@ -1,6 +1,5 @@
 import { cn } from '~/utils/cn';
 import { Page } from '../shared/Page';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
 import { ReactNode } from 'react';
 import Link from 'next/link';
 
@@ -9,23 +8,25 @@ export function Home() {
 		<Page>
 			<div className="flex h-full flex-col justify-evenly gap-y-2">
 				<Card href="/notes">
-					<picture className="flex aspect-square h-[90%] items-center justify-center">
-						<img srcSet="notes.webp" />
-					</picture>
+					<img
+						alt="notes image"
+						src="/images/notes.webp"
+						className="flex aspect-square h-[90%] items-center justify-center"
+					/>
 
 					<span className="text-3xl font-bold text-brand-600">Notas</span>
 				</Card>
 
 				<Card href="/practice">
-					<picture className="flex aspect-square h-[90%] items-center justify-center">
-						<img src="/practice.webp" />
-					</picture>
+					<img
+						alt="practice image"
+						src="/images/practice.webp"
+						className="flex aspect-square h-[90%] items-center justify-center"
+					/>
 
 					<span className="text-3xl font-bold text-brand-600">Práctica</span>
 				</Card>
 			</div>
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

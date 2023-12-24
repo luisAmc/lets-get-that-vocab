@@ -2,18 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--doc-height: 100dvh;
-	/* --font-face-googlesans: 'Google Sans', sans-serif; */
-}
-
 html,
 body,
 #__next {
-	@apply bg-gray-50 font-sans text-brand-900 antialiased;
-	height: var(--doc-height);
-	scroll-behavior: smooth;
-	/* font-family: var(--font-face-googlesans); */
+	@apply h-dvh scroll-smooth bg-gray-50 font-sans text-brand-900 antialiased;
 }
 
 @keyframes bounce-horizontal {

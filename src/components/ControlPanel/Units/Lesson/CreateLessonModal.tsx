@@ -1,14 +1,14 @@
-import { Button } from '../../shared/Button';
-import { Checkbox } from '../../shared/Checkbox';
-import { FieldError, Form, useZodForm } from '../../shared/Form';
-import { Input } from '../../shared/Input';
-import { Modal, useModal } from '../../shared/Modal';
+import { Button } from '../../../shared/Button';
+import { Checkbox } from '../../../shared/Checkbox';
+import { FieldError, Form, useZodForm } from '../../../shared/Form';
+import { Input } from '../../../shared/Input';
+import { Modal, useModal } from '../../../shared/Modal';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
-import { SubmitButton } from '../../shared/SubmitButton';
+import { SubmitButton } from '../../../shared/SubmitButton';
 import { z } from 'zod';
 import { api } from '~/utils/api';
 import { QuestionType } from '@prisma/client';
-import { ErrorMessage } from '../../shared/ErrorMessage';
+import { ErrorMessage } from '../../../shared/ErrorMessage';
 
 const createLessonSchema = z
 	.object({

@@ -22,7 +22,7 @@ export function Unit({ unit }: UnitProps) {
 				{unit.lessons.length > 0 ? (
 					unit.lessons.map((lesson) => (
 						<Link
-							href={`/control-panel/${unit.id}/${lesson.id}`}
+							href={`/control-panel/units/${unit.id}/${lesson.id}`}
 							key={lesson.id}
 							className="rounded-lg px-4 py-3 hover:bg-brand-200"
 						>

@@ -3,7 +3,6 @@ import { BookOpenIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { Button } from '../shared/Button';
 import { NoteList } from './NoteList';
 import { Page } from '../shared/Page';
-import { PrivacyScreen } from '../shared/PrivacyScreen';
 
 export function Notes() {
 	const { data, isLoading } = api.note.getAll.useQuery();
@@ -28,8 +27,6 @@ export function Notes() {
 				{!isLoading &&
 					(notes.length > 0 ? <NoteList notes={notes} /> : <EmptyNoteList />)}
 			</article>
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

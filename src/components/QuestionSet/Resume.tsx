@@ -71,7 +71,7 @@ export function Resume() {
 
 			<Button href="/practice" size="xl" className="w-full">
 				<ArrowPathIcon className="mr-2 h-5 w-5" />
-				<span>Volver al inicio</span>
+				<span>Volver a unidades</span>
 			</Button>
 		</div>
 	);

@@ -4,7 +4,6 @@ import { ChevronLeftIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
 import { CreateWordModal } from '../Word/CreateWordModal';
 import { EditLessonModal } from './EditLessonModal';
 import { Page } from '~/components/shared/Page';
-import { PrivacyScreen } from '~/components/shared/PrivacyScreen';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -13,7 +12,7 @@ export function Lesson() {
 
 	const { data } = api.lesson.get.useQuery(
 		{ id: router.query.lessonId as string },
-		{ enabled: !!router.isReady },
+		{ enabled: !!router.isReady && !!router.query.lessonId },
 	);
 
 	const words = data?.words ?? [];
@@ -24,7 +23,11 @@ export function Lesson() {
 				<article className="flex w-full flex-col gap-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 					<header className="flex items-center justify-between">
 						<div className="flex items-center gap-x-2">
-							<Button variant="secondary" size="icon" href="/control-panel">
+							<Button
+								variant="secondary"
+								size="icon"
+								href="/control-panel/units"
+							>
 								<ChevronLeftIcon className="h-5 w-5" />
 							</Button>
 
@@ -62,8 +65,6 @@ export function Lesson() {
 					</section>
 				</article>
 			)}
-
-			<PrivacyScreen />
 		</Page>
 	);
 }

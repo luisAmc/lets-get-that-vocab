@@ -13,6 +13,7 @@ const buttonVariants = cva(
 				positive: 'bg-green-500 text-green-50 hover:bg-green-500/90',
 				secondary: 'bg-brand-300 text-brand-900 hover:bg-brand-300/80',
 				ghost: 'hover:bg-brand-300 hover:text-brand-900',
+				outline: 'border hover:border-brand-300 hover:bg-brand-100',
 			},
 			size: {
 				default: 'h-10 px-4 py-2',

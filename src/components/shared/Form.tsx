@@ -45,7 +45,7 @@ export function FieldError({ name }: FieldErrorsProps) {
 	);
 }
 
-interface Props<T extends FieldValues = any>
+export interface FormProps<T extends FieldValues = any>
 	extends Omit<ComponentProps<'form'>, 'onSubmit'> {
 	form: UseFormReturn<T>;
 	onSubmit: SubmitHandler<T>;
@@ -58,7 +58,7 @@ export const Form = <T extends FieldValues>({
 	children,
 	submitted = false,
 	...props
-}: Props<T>) => {
+}: FormProps<T>) => {
 	return (
 		<FormProvider {...form}>
 			<form
@@ -67,7 +67,7 @@ export const Form = <T extends FieldValues>({
 				className="flex-1"
 			>
 				<fieldset
-					className="flex h-full flex-col space-y-4"
+					className="flex h-full flex-col gap-y-4"
 					disabled={form.formState.isSubmitting || submitted}
 				>
 					{children}

@@ -5,7 +5,7 @@ import { checkCreateAccessKey } from '~/utils/checkCreateAccessKey';
 export const noteRouter = createTRPCRouter({
 	getAll: publicProcedure.query(async ({ ctx }) => {
 		return ctx.db.note.findMany({
-			orderBy: { createdAt: 'asc' },
+			orderBy: { createdAt: 'desc' },
 			select: {
 				id: true,
 				name: true,
@@ -21,12 +21,45 @@ export const noteRouter = createTRPCRouter({
 						_count: {
 							select: { words: true },
 						},
-					}
+					},
 				},
 				createdAt: true,
 			},
 		});
 	}),
+
+	get: publicProcedure
+		.input(z.object({ id: z.string().min(1) }))
+		.query(async ({ ctx, input }) => {
+			return ctx.db.note.findUniqueOrThrow({
+				where: { id: input.id },
+				select: {
+					id: true,
+					name: true,
+					date: true,
+					adittionalNotes: true,
+					fileSrc: true,
+					videoSrc: true,
+					relatedLesson: {
+						select: {
+							id: true,
+							name: true,
+							availableQuestionTypes: true,
+							unit: {
+								select: {
+									id: true,
+									name: true,
+								},
+							},
+							_count: {
+								select: { words: true },
+							},
+						},
+					},
+					createdAt: true,
+				},
+			});
+		}),
 
 	create: publicProcedure
 		.input(
@@ -60,4 +93,43 @@ export const noteRouter = createTRPCRouter({
 				},
 			});
 		}),
+
+	edit: publicProcedure
+		.input(
+			z.object({
+				noteId: z.string().min(1),
+				name: z.string().min(1),
+				date: z.date(),
+				adittionalNotes: z.string().optional(),
+				fileSrc: z.string().optional(),
+				videoSrc: z.string().optional(),
+				relatedLessonId: z.string().optional(),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			checkCreateAccessKey(input.createAccessKey);
+
+			if (input.relatedLessonId) {
+				await ctx.db.lesson.findUniqueOrThrow({
+					where: { id: input.relatedLessonId },
+				});
+			}
+
+			return ctx.db.note.update({
+				where: { id: input.noteId },
+				data: {
+					name: input.name,
+					date: input.date,
+					adittionalNotes: input.adittionalNotes,
+					fileSrc: input.fileSrc,
+					videoSrc: input.videoSrc,
+					relatedLessonId: input.relatedLessonId || null,
+				},
+			});
+		}),
+
+	removePDF: publicProcedure
+		.input(z.object({}))
+		.mutation(async ({ input }) => {}),
 });

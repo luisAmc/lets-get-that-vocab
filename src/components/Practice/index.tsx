@@ -54,34 +54,23 @@ export function Practice() {
 	}
 
 	return (
-		<Page>
+		<Page to="/" title="Práctica">
 			{isLoading && <Skeleton />}
 
 			{!isLoading && data && (
 				<>
-					{/* <Header /> */}
-
 					<div className="flex flex-col gap-y-4">
 						{data
 							.filter((unit) => unit.lessons.length > 0)
 							.map((unit, unitIndex) => (
 								<section
 									key={unit.id}
-									className={cn(
-										'flex w-full flex-col overflow-hidden rounded-xl border',
-										[
-											'border-green-200',
-											'border-purple-200',
-											'border-teal-200',
-										][unitIndex % 3],
-									)}
+									className="flex w-full flex-col overflow-hidden rounded-xl"
 								>
 									<div
 										className={cn(
-											['bg-green-400', 'bg-purple-400', 'bg-teal-400'][
-												unitIndex % 3
-											],
-											'flex items-center rounded-t-xl p-6',
+											['bg-teal-400', 'bg-purple-400'][unitIndex % 2],
+											'flex items-center p-6',
 										)}
 									>
 										<span className="text-3xl font-bold text-white">
@@ -93,9 +82,7 @@ export function Practice() {
 										<div
 											className={cn(
 												'flex flex-col items-center justify-center gap-y-4 py-4',
-												['bg-green-100', 'bg-purple-100', 'bg-teal-100'][
-													unitIndex % 3
-												],
+												['bg-teal-100', 'bg-purple-100'][unitIndex % 2],
 											)}
 										>
 											{unit.lessons

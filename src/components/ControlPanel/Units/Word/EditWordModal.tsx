@@ -60,7 +60,7 @@ export function EditWordModal({ word }: EditWordModalProps) {
 		return tagsQuery.data.map((tag) => ({ label: tag.name, value: tag.id }));
 	}, [tagsQuery.data]);
 
-	const removeImgMutation = api.word.removeImg.useMutation({
+	const removeImgMutation = api.file.remove.useMutation({
 		onError: () => {
 			form.reset(form.getValues());
 		},
@@ -93,7 +93,7 @@ export function EditWordModal({ word }: EditWordModalProps) {
 			const imgKey = word.imgSrc.split('/').pop()!;
 
 			await removeImgMutation.mutateAsync({
-				imgKey,
+				key: imgKey,
 				directory: 'images/',
 				createAccessKey: input.createAccessKey,
 			});

@@ -1,21 +1,13 @@
+import { ACCEPTED_FILE_TYPES, MAX_FILE_SIZE, NoteForm } from './NoteForm';
 import { api } from '~/utils/api';
 import { Button } from '../../shared/Button';
-import { CheckCircleIcon, PlusCircleIcon } from '@heroicons/react/24/outline';
 import { dateFromString } from '~/utils/transforms';
-import { ErrorMessage } from '../../shared/ErrorMessage';
-import { Form, useZodForm } from '../../shared/Form';
-import { Input } from '../../shared/Input';
+import { ErrorMessage } from '~/components/shared/ErrorMessage';
 import { Modal, useModal } from '../../shared/Modal';
-import { SubmitButton } from '../../shared/SubmitButton';
-import { Textarea } from '../../shared/Textarea';
+import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import { uploadFile } from '~/utils/uploadFile';
+import { useZodForm } from '../../shared/Form';
 import { z } from 'zod';
-import { Search } from '~/components/shared/Search';
-import { useMemo } from 'react';
-
-const MAX_FILE_SIZE = 1 * 1000 * 1000 * 10; //10MB
-
-const ACCEPTED_FILE_TYPES = ['application/pdf'];
 
 const createNoteSchema = z.object({
 	name: z.string().min(1, 'Ingrese el nombre.'),
@@ -37,22 +29,10 @@ export function CreateNoteModal() {
 	const createModal = useModal();
 
 	const form = useZodForm({ schema: createNoteSchema });
-	const lessonsQuery = api.lesson.getAll.useQuery();
-
-	const lessonOptions = useMemo(() => {
-		if (!lessonsQuery.data) {
-			return [];
-		}
-
-		return lessonsQuery.data.map((lesson) => ({
-			label: lesson.name,
-			value: lesson.id,
-		}));
-	}, [lessonsQuery.data]);
 
 	const createSignedMutation = api.file.createPresignedUrl.useMutation({
 		onError: () => {
-			form.reset(form.getValues());
+			form.clearErrors();
 		},
 	});
 
@@ -65,7 +45,7 @@ export function CreateNoteModal() {
 			form.reset();
 		},
 		onError: () => {
-			form.reset(form.getValues());
+			form.clearErrors();
 		},
 	});
 
@@ -99,7 +79,7 @@ export function CreateNoteModal() {
 			</Button>
 
 			<Modal {...createModal.props} title="Crear nota">
-				<Form form={form} onSubmit={handleSubmit}>
+				<div className="flex flex-col gap-y-4">
 					<ErrorMessage
 						title="No se pudo crear la nota"
 						error={
@@ -108,44 +88,8 @@ export function CreateNoteModal() {
 						}
 					/>
 
-					<Input {...form.register('name')} label="Nombre" />
-
-					<Input {...form.register('date')} label="Fecha" type="date" />
-
-					<Input
-						{...form.register('media')}
-						label="Media (PDF)"
-						type="file"
-						accept="application/pdf"
-					/>
-
-					<Input
-						{...form.register('videoSrc')}
-						label="Link de video de clase (Opcional)"
-					/>
-
-					<Search
-						{...form.register('relatedLessonId')}
-						label="Lección relacionada (Opcional)"
-						options={lessonOptions}
-					/>
-
-					<Textarea
-						{...form.register('adittionalNotes')}
-						label="Notas adicionales (Opcional)"
-					/>
-
-					<Input
-						{...form.register('createAccessKey')}
-						type="password"
-						label="Clave de creación"
-					/>
-
-					<SubmitButton>
-						<CheckCircleIcon className="mr-1 h-4 w-4" />
-						<span>Crear</span>
-					</SubmitButton>
-				</Form>
+					<NoteForm type="create" form={form} onSubmit={handleSubmit} />
+				</div>
 			</Modal>
 		</>
 	);

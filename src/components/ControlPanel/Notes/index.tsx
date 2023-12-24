@@ -10,7 +10,7 @@ export function Notes() {
 	const notes = data ?? [];
 
 	return (
-		<Page to='/control-panel' title="Notas">
+		<Page to="/control-panel" title="Notas">
 			{!isLoading && notes && (
 				<article className="border- rounded-xl border border-brand-100 bg-brand-50 p-4 shadow-sm">
 					<section className="flex flex-col gap-y-4">

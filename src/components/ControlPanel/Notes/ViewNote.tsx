@@ -3,6 +3,7 @@ import { Button } from '~/components/shared/Button';
 import { Page } from '~/components/shared/Page';
 import { api } from '~/utils/api';
 import { formatDate } from '~/utils/transforms';
+import { EditNoteModal } from './EditNoteModal';
 
 export function ViewNote() {
 	const router = useRouter();
@@ -13,7 +14,11 @@ export function ViewNote() {
 	);
 
 	return (
-		<Page to='/control-panel/notes' title="Nota">
+		<Page
+			to="/control-panel/notes"
+			title="Nota"
+			action={data ? <EditNoteModal note={data} /> : undefined}
+		>
 			<div className="space-y-4">
 				{data && (
 					<div className="space-y-4 rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">

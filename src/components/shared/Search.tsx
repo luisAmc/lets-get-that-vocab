@@ -1,9 +1,11 @@
 import { ComponentPropsWithRef, forwardRef, useMemo, useState } from 'react';
 import { FieldError } from './Form';
 
+export type SearchOption = { label: string; value: string };
+
 interface SearchProps extends ComponentPropsWithRef<'select'> {
 	label?: string;
-	options: Array<{ label: string; value: string }>;
+	options: Array<SearchOption>;
 }
 
 export const Search = forwardRef<HTMLSelectElement, SearchProps>(

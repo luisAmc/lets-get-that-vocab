@@ -93,4 +93,43 @@ export const noteRouter = createTRPCRouter({
 				},
 			});
 		}),
+
+	edit: publicProcedure
+		.input(
+			z.object({
+				noteId: z.string().min(1),
+				name: z.string().min(1),
+				date: z.date(),
+				adittionalNotes: z.string().optional(),
+				fileSrc: z.string().optional(),
+				videoSrc: z.string().optional(),
+				relatedLessonId: z.string().optional(),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			checkCreateAccessKey(input.createAccessKey);
+
+			if (input.relatedLessonId) {
+				await ctx.db.lesson.findUniqueOrThrow({
+					where: { id: input.relatedLessonId },
+				});
+			}
+
+			return ctx.db.note.update({
+				where: { id: input.noteId },
+				data: {
+					name: input.name,
+					date: input.date,
+					adittionalNotes: input.adittionalNotes,
+					fileSrc: input.fileSrc,
+					videoSrc: input.videoSrc,
+					relatedLessonId: input.relatedLessonId || null,
+				},
+			});
+		}),
+
+	removePDF: publicProcedure
+		.input(z.object({}))
+		.mutation(async ({ input }) => {}),
 });

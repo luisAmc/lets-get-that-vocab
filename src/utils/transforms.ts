@@ -1,6 +1,6 @@
 import { format } from 'date-fns/format';
 import { parse } from 'date-fns/parse';
-import esLocale from 'date-fns/locale/es';
+import { es as esLocale } from 'date-fns/locale/es';
 
 export function dateFromString(
 	dateString: string,

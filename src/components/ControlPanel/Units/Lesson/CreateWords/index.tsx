@@ -88,7 +88,7 @@ export function CreateWords() {
 
 		for (const word of input.words) {
 			const signedUrl = await createSignedMutation.mutateAsync({
-				directory: 'testImages/',
+				directory: 'images/',
 				ext: (word.media[0] as File).name.split('.').pop()!,
 				createAccessKey: input.createAccessKey,
 			});

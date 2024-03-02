@@ -1,7 +1,10 @@
 import { api } from '~/utils/api';
 import { Button } from '~/components/shared/Button';
-import { ChevronLeftIcon, FaceFrownIcon } from '@heroicons/react/24/outline';
-import { CreateWordModal } from '../Word/CreateWordModal';
+import {
+	ChevronLeftIcon,
+	FaceFrownIcon,
+	PlusCircleIcon,
+} from '@heroicons/react/24/outline';
 import { EditLessonModal } from './EditLessonModal';
 import { Page } from '~/components/shared/Page';
 import { useRouter } from 'next/router';
@@ -60,7 +63,13 @@ export function Lesson() {
 								</div>
 							)}
 
-							<CreateWordModal />
+							<Button
+								variant="secondary"
+								href={`${router.asPath}/create-words`}
+							>
+								<PlusCircleIcon className="mr-1 h-4 w-4" />
+								<span>Añadir palabras o frases</span>
+							</Button>
 						</div>
 					</section>
 				</article>

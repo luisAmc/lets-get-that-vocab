@@ -46,6 +46,33 @@ export const wordRouter = createTRPCRouter({
 			});
 		}),
 
+	createMultiple: publicProcedure
+		.input(
+			z.object({
+				words: z.array(
+					z.object({
+						name: z.string().min(1),
+						imgSrc: z.string().min(1),
+						tagId: z.string().min(1),
+						lessonId: z.string().min(1),
+					}),
+				),
+				createAccessKey: z.string().min(1),
+			}),
+		)
+		.mutation(async ({ ctx, input }) => {
+			checkCreateAccessKey(input.createAccessKey);
+
+			return ctx.db.word.createMany({
+				data: input.words.map((word) => ({
+					text: word.name,
+					imgSrc: word.imgSrc,
+					tagId: word.tagId,
+					lessonId: word.lessonId,
+				})),
+			});
+		}),
+
 	edit: publicProcedure
 		.input(
 			z.object({

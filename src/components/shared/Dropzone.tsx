@@ -11,6 +11,7 @@ export interface FileWithPreview extends File {
 interface Props {
 	multiple?: boolean;
 	disabled?: boolean;
+	name: string;
 }
 
 export const MAX_FILE_SIZE = 1 * 1000 * 1000 * 10; // 10MB
@@ -23,11 +24,11 @@ export const ACCEPTED_IMAGE_TYPES = [
 	'image/webp',
 ];
 
-export function Dropzone({ multiple = false, disabled = false }: Props) {
+export function Dropzone({ multiple = false, disabled = false, name }: Props) {
 	const form = useFormContext();
 
 	const media: FileWithPreview[] | undefined = useWatch({
-		name: 'media',
+		name: name,
 		control: form.control,
 	});
 
@@ -41,7 +42,7 @@ export function Dropzone({ multiple = false, disabled = false }: Props) {
 			),
 		},
 		onDrop: (acceptedFiles) => {
-			form.setValue('media', [
+			form.setValue(name, [
 				...(multiple ? form.getValues().media ?? [] : []),
 				...acceptedFiles.map((file) =>
 					Object.assign(file, {
@@ -54,7 +55,9 @@ export function Dropzone({ multiple = false, disabled = false }: Props) {
 
 	useEffect(
 		() => () => {
-			media?.forEach((file) => URL.revokeObjectURL(file.preview));
+			if (media) {
+				URL.revokeObjectURL(media?.[0].preview);
+			}
 		},
 		[media],
 	);
@@ -62,7 +65,7 @@ export function Dropzone({ multiple = false, disabled = false }: Props) {
 	return (
 		<div>
 			<div
-				className="border-brand-300 hover:bg-brand-100 grid h-64 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed"
+				className="grid h-10 w-full cursor-pointer place-items-center overflow-hidden rounded-lg border border-solid border-brand-200 hover:bg-brand-100"
 				{...dropzone.getRootProps()}
 			>
 				<input {...dropzone.getInputProps()} disabled={disabled} />
@@ -76,17 +79,13 @@ export function Dropzone({ multiple = false, disabled = false }: Props) {
 				) : (
 					<>
 						{dropzone.isDragActive ? (
-							<p className="text-brand-500 text-xs">Suelte la imagen aquí...</p>
+							<span className="text-xs text-brand-500">
+								Suelte la imagen aquí...
+							</span>
 						) : (
-							<div className="text-brand-500 flex flex-col items-center justify-center p-6">
-								<CloudArrowUpIcon className="h-8 w-8" />
-
-								<p className="mb-2 text-xs">
-									<span className="font-semibold">Presione click</span> o
-									arrastre y suelte
-								</p>
-
-								<p className="text-xs">JPG, PNG, GIF o WEBP</p>
+							<div className="flex items-center justify-center gap-x-2 text-brand-500">
+								<CloudArrowUpIcon className="size-5" />
+								<span className="text-xs">(JPG, PNG, GIF o WEBP)</span>
 							</div>
 						)}
 					</>

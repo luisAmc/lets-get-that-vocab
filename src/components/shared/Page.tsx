@@ -3,12 +3,14 @@ import { ChevronLeftIcon } from '@heroicons/react/24/outline';
 import { PrivacyScreen } from './PrivacyScreen';
 import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
+import { cn } from '~/utils/cn';
 
 interface PageProps {
 	goBack?: boolean;
 	to?: string;
 	title?: string;
 	action?: ReactNode;
+	className?: string;
 	children: ReactNode;
 }
 
@@ -17,6 +19,7 @@ export function Page({
 	to,
 	title,
 	action,
+	className,
 	children,
 }: PageProps) {
 	const router = useRouter();
@@ -27,7 +30,12 @@ export function Page({
 	const hasHeader = goBack || to || title || action;
 
 	return (
-		<main className="relative mx-auto h-full w-full max-w-lg px-2 py-4">
+		<main
+			className={cn(
+				'relative mx-auto h-full w-full max-w-lg px-2 py-4',
+				className,
+			)}
+		>
 			{hasHeader && (
 				<header className="mb-4 flex items-center justify-between">
 					<div className="flex items-center gap-x-4">

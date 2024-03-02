@@ -66,6 +66,7 @@ export function NoteForm({ type, form, onSubmit }: NoteFormProps) {
 			<Search
 				{...form.register('relatedLessonId')}
 				label="Lección relacionada (Opcional)"
+				placeholder="Seleccione una lección (Opcional)"
 				options={lessonOptions}
 			/>
 

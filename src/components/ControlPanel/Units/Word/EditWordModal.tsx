@@ -135,7 +135,7 @@ export function EditWordModal({ word }: EditWordModalProps) {
 
 					<Input {...form.register('name')} label="Palabra o frase" />
 
-					<Dropzone />
+					<Dropzone name="media" />
 
 					<RadioButtonGroup name="tagId" label="Etiqueta" options={tags} />
 

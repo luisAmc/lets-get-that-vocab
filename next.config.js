@@ -1,4 +1,14 @@
-module.exports = {
+const runtimeCaching = require('next-pwa/cache');
+
+const withPWA = require('next-pwa')({
+	dest: 'public',
+	register: true,
+	skipWaiting: true,
+	runtimeCaching,
+	disable: process.env.NODE_ENV !== 'production',
+});
+
+const nextConfig = {
 	images: {
 		remotePatterns: [
 			{
@@ -8,3 +18,5 @@ module.exports = {
 		],
 	},
 };
+
+module.exports = withPWA(nextConfig);

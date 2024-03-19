@@ -5,6 +5,8 @@ import { Page } from '../shared/Page';
 import { useModal } from '../shared/Modal';
 import { useState } from 'react';
 import { AnimatePresence, Variants, motion } from 'framer-motion';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { NumberPracticeOptionsModal } from './NumberPracticeOptionsModal';
 
 const shiftValues = [
 	'm-0',
@@ -45,6 +47,7 @@ export function Practice() {
 	const { data, isLoading } = api.unit.getAll.useQuery();
 
 	const lessonOptionsModal = useModal();
+	const numberPracticeOptionsModal = useModal();
 
 	const [selectedLesson, setSelectedLesson] = useState<LessonType | null>(null);
 
@@ -55,6 +58,19 @@ export function Practice() {
 
 	return (
 		<Page to="/" title="Práctica">
+			<button
+				type="button"
+				className="flex w-full items-center justify-between rounded-xl bg-sky-100 p-6"
+				onClick={numberPracticeOptionsModal.open}
+			>
+				<div className="text-2xl font-semibold text-sky-800">Números</div>
+				<ArrowRightIcon className="size-6 stroke-2 text-sky-800" />
+			</button>
+
+			<NumberPracticeOptionsModal {...numberPracticeOptionsModal.props} />
+
+			<div className="mb-4"></div>
+
 			{isLoading && <Skeleton />}
 
 			{!isLoading && data && (

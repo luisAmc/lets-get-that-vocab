@@ -19,7 +19,7 @@ export function QuestionSet() {
 		{ lessonId, questionTypes, questionSetSize },
 		{
 			enabled:
-				router.isReady && !!lessonId && !!questionTypes && !!questionSetSize,
+				!!router.isReady && !!lessonId && !!questionTypes && !!questionSetSize,
 			refetchOnWindowFocus: false,
 		},
 	);

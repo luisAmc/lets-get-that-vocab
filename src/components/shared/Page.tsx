@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { cn } from '~/utils/cn';
 
 interface PageProps {
+	size?: 'desktop' | 'mobile';
 	goBack?: boolean;
 	to?: string;
 	title?: string;
@@ -15,6 +16,7 @@ interface PageProps {
 }
 
 export function Page({
+	size = 'mobile',
 	goBack = false,
 	to,
 	title,
@@ -33,6 +35,10 @@ export function Page({
 		<main
 			className={cn(
 				'relative mx-auto h-full w-full max-w-lg px-2 py-4',
+				{
+					'max-w-lg': size === 'mobile',
+					'max-w-7xl': size === 'desktop',
+				},
 				className,
 			)}
 		>

@@ -21,3 +21,54 @@ export function formatDate(
 
 	return format(date, pattern, { locale: esLocale });
 }
+
+const ZERO = '공';
+const digitSymbol = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+const groupSymbol = ['', '십', '백', '천'];
+const clusterSymbol = ['', '만', '억', '조', '경'];
+
+export function numberToHanja(number: number) {
+	if (number === 0) {
+		return ZERO;
+	}
+
+	const parsedTokens = number
+		.toString()
+		.split('')
+		.map((n) => Number(n))
+		.reverse()
+		.map((digit, digitIndex) => {
+			const powerIndex = digitIndex % 4;
+			const dotIndex = Math.ceil(digitIndex / 4);
+
+			const power = digit === 0 ? '' : groupSymbol[powerIndex];
+			const dot = powerIndex === 0 ? clusterSymbol[dotIndex] : '';
+
+			let numToText = digitSymbol[digit] || '';
+			if ((power || dot) && digit === 1) {
+				numToText = '';
+			}
+
+			return `${numToText}${power}${dot}`;
+		});
+
+	const safeParsedTokens = splitArrayInFours(parsedTokens)
+		// .map((segment) =>
+		// 	clusterSymbol.indexOf(segment.join('')) > 0 ? ['', '', '', ''] : segment,
+		// )
+		.reduce((acc, val) => acc.concat(val), [])
+		.reverse();
+
+	return safeParsedTokens.join('');
+}
+
+function splitArrayInFours<T>(array: Array<T>) {
+	const result = [];
+	let index = 0;
+
+	while (index < array.length) {
+		result.push(array.slice(index, (index += 4)));
+	}
+
+	return result;
+}

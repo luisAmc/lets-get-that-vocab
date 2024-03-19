@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently -c green.bold,blue.bold 'bun:dev:docker' 'bun:dev:next'",
+    "dev": "concurrently -c green.bold,blue.bold 'pnpm:dev:docker' 'pnpm:dev:next'",
     "dev:docker": "docker compose up",
     "dev:next": "next dev",
     "build": "next build",

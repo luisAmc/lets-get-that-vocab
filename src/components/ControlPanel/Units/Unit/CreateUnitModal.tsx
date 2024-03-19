@@ -35,8 +35,12 @@ export function CreateUnitModal() {
 
 	return (
 		<>
-			<Button variant="secondary" onClick={createUnitModal.open}>
-				<PlusCircleIcon className="mr-1 h-4 w-4" />
+			<Button
+				variant="dashed"
+				onClick={createUnitModal.open}
+				className="h-20 w-full"
+			>
+				<PlusCircleIcon className="mr-1 size-4" />
 				<span>Añadir una unidad</span>
 			</Button>
 

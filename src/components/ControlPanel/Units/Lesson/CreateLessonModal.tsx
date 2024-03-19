@@ -71,8 +71,12 @@ export function CreateLessonModal({ unitId }: CreateLessonFormProps) {
 
 	return (
 		<>
-			<Button variant="secondary" onClick={createModal.open}>
-				<PlusCircleIcon className="h-4 w-4" />
+			<Button
+				variant="dashed"
+				onClick={createModal.open}
+				className="h-20 w-full"
+			>
+				<PlusCircleIcon className="mr-1 size-4" />
 				<span>Añadir una lección</span>
 			</Button>
 

@@ -37,7 +37,7 @@ const createWordsSchema = z.object({
 
 export function CreateWords() {
 	const router = useRouter();
-	const lessonId = router.query.lessonId as string;
+	const { unitId, lessonId } = router.query as Record<string, string>;
 
 	const createSignedMutation = api.file.createPresignedUrl.useMutation({
 		onError: () => {
@@ -114,7 +114,12 @@ export function CreateWords() {
 			<div className="rounded-xl border-2 border-brand-300 bg-white px-4 py-6 shadow-sm">
 				<header className="mb-4 flex items-center justify-between">
 					<div className="flex items-center gap-x-2">
-						<Button variant="secondary" size="icon" href="/control-panel/units">
+						<Button
+							variant="secondary"
+							size="icon"
+							// href={`/control-panel/units/${unitId}/${lessonId}`}
+							href={`/control-panel`}
+						>
 							<ChevronLeftIcon className="h-5 w-5" />
 						</Button>
 

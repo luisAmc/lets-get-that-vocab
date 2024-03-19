@@ -105,10 +105,8 @@ export function InputName({ questionIndex }: InputNameProps) {
 				</AnimatePresence>
 			</div>
 
-			<div className="flex-1"></div>
-
-			<div>
-				<Form form={form} onSubmit={handleVerifyClick}>
+			<Form form={form} onSubmit={handleVerifyClick}>
+				<div className="flex h-full flex-col gap-y-4">
 					<input
 						{...form.register('input')}
 						inputMode="numeric"
@@ -123,6 +121,8 @@ export function InputName({ questionIndex }: InputNameProps) {
 						placeholder="Escribe aquí..."
 					/>
 
+					<div className="flex-1"></div>
+
 					{!showAnswer && (
 						<VerifyButton
 							isOptionSelected={Boolean(nameEntered)}
@@ -131,8 +131,8 @@ export function InputName({ questionIndex }: InputNameProps) {
 					)}
 
 					{showAnswer && <ContinueButton onClick={handleContinueClick} />}
-				</Form>
-			</div>
+				</div>
+			</Form>
 		</section>
 	);
 }

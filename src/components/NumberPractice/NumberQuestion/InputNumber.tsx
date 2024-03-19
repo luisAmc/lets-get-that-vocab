@@ -56,7 +56,9 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 	return (
 		<section className="flex h-full flex-1 flex-col gap-y-4 pt-2">
 			<div className="flex items-center justify-between">
-				<h1 className="text-lg font-medium">¿A qué número corresponde este nombre?</h1>
+				<h1 className="text-lg font-medium">
+					¿A qué número corresponde este nombre?
+				</h1>
 			</div>
 
 			<div className="relative overflow-hidden rounded-xl">
@@ -99,10 +101,8 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 				</AnimatePresence>
 			</div>
 
-			<div className="flex-1"></div>
-
-			<div>
-				<Form form={form} onSubmit={handleVerifyClick}>
+			<Form form={form} onSubmit={handleVerifyClick}>
+				<div className="flex h-full flex-col gap-y-4">
 					<input
 						{...form.register('input', { valueAsNumber: true })}
 						className={cn(
@@ -116,6 +116,8 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 						placeholder="Escribe aquí..."
 					/>
 
+					<div className="flex-1"></div>
+
 					{!showAnswer && (
 						<VerifyButton
 							isOptionSelected={Boolean(numberEntered)}
@@ -124,8 +126,8 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 					)}
 
 					{showAnswer && <ContinueButton onClick={handleContinueClick} />}
-				</Form>
-			</div>
+				</div>
+			</Form>
 		</section>
 	);
 }

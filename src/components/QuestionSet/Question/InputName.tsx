@@ -115,8 +115,6 @@ export function InputName({ questionIndex }: InputNameProps) {
 						placeholder="Escribe aquí..."
 					/>
 
-					<div className="flex-1"></div>
-
 					{!showAnswer && (
 						<VerifyButton
 							isOptionSelected={Boolean(nameEntered)}

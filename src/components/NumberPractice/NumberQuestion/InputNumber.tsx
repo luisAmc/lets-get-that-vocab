@@ -105,6 +105,7 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 				<div className="flex h-full flex-col gap-y-4">
 					<input
 						{...form.register('input', { valueAsNumber: true })}
+						inputMode="numeric"
 						className={cn(
 							'h-14 w-full rounded-xl border-2 border-solid border-transparent px-4 py-2 text-center text-xl text-gray-900 ring-2',
 							'focus:border-yellow-primary focus:ring-yellow-primary focus:outline-none',

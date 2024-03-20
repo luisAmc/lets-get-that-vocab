@@ -6,11 +6,11 @@ import {
 	CheckIcon,
 	XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from '~/components/shared/Button';
 import { Form, useZodForm } from '~/components/shared/Form';
 import { z } from 'zod';
 import { useWatch } from 'react-hook-form';
 import { useNumberQuestionSet } from '../NumberQuestionSetProvider';
+import { SubmitButton } from '~/components/shared/SubmitButton';
 
 const inputNameSchema = z.object({
 	input: z.string().min(1, 'Ingrese el nombre'),
@@ -140,7 +140,7 @@ interface ContinueButtonProps {
 
 function ContinueButton({ onClick }: ContinueButtonProps) {
 	return (
-		<Button
+		<SubmitButton
 			size="xl"
 			variant="secondary"
 			className="flex items-center justify-between"
@@ -148,7 +148,7 @@ function ContinueButton({ onClick }: ContinueButtonProps) {
 		>
 			<span>Siguiente</span>
 			<ArrowRightIcon className="animate-bounce-horizontal h-6 w-6" />
-		</Button>
+		</SubmitButton>
 	);
 }
 
@@ -160,14 +160,14 @@ interface VerifyButtonProps {
 function VerifyButton({ isOptionSelected, onClick }: VerifyButtonProps) {
 	return (
 		<>
-			<Button
+			<SubmitButton
 				size="xl"
 				variant={isOptionSelected ? 'positive' : 'secondary'}
 				onClick={onClick}
 				disabled={!isOptionSelected}
 			>
 				<span>{isOptionSelected ? 'Verificar' : 'Seleccione una opción'}</span>
-			</Button>
+			</SubmitButton>
 		</>
 	);
 }

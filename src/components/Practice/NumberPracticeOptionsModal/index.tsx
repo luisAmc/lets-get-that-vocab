@@ -69,7 +69,14 @@ export function NumberPracticeOptionsModal({
 
 				<NumberTypeGroup />
 
-				{numberType === NUMBER_TYPES['한자어 수'] && <RangeCardGroup />}
+				{numberType === NUMBER_TYPES['한자어 수'] ? (
+					<RangeCardGroup />
+				) : (
+					<div className="rounded-lg border bg-gray-100 p-6 text-center text-sm font-normal">
+						Con los <span className="font-bold">고유어 수</span> el rango será
+						de <span className='font-bold'>1 - 99</span>.
+					</div>
+				)}
 
 				<QuestionTypeGroup />
 

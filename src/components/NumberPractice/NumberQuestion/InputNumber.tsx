@@ -6,12 +6,12 @@ import {
 	CheckIcon,
 	XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from '~/components/shared/Button';
 import { Form, useZodForm } from '~/components/shared/Form';
 import { z } from 'zod';
 import { useWatch } from 'react-hook-form';
 import { useNumberQuestionSet } from '../NumberQuestionSetProvider';
 import { formatNumber } from '~/utils/transforms';
+import { SubmitButton } from '~/components/shared/SubmitButton';
 
 const inputNameSchema = z.object({
 	input: z.string().min(1, 'Ingrese el nombre'),
@@ -108,7 +108,8 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 				<div className="flex h-full flex-col gap-y-4">
 					<input
 						{...form.register('input', { valueAsNumber: true })}
-						inputMode="numeric"
+						type="number"
+						// inputMode="numeric"
 						className={cn(
 							'h-14 w-full rounded-xl border-2 border-solid border-transparent px-4 py-2 text-center text-xl text-gray-900 ring-2',
 							'focus:border-yellow-primary focus:ring-yellow-primary focus:outline-none',
@@ -140,7 +141,7 @@ interface ContinueButtonProps {
 
 function ContinueButton({ onClick }: ContinueButtonProps) {
 	return (
-		<Button
+		<SubmitButton
 			size="xl"
 			variant="secondary"
 			className="flex items-center justify-between"
@@ -148,7 +149,7 @@ function ContinueButton({ onClick }: ContinueButtonProps) {
 		>
 			<span>Siguiente</span>
 			<ArrowRightIcon className="animate-bounce-horizontal h-6 w-6" />
-		</Button>
+		</SubmitButton>
 	);
 }
 
@@ -160,14 +161,14 @@ interface VerifyButtonProps {
 function VerifyButton({ isOptionSelected, onClick }: VerifyButtonProps) {
 	return (
 		<>
-			<Button
+			<SubmitButton
 				size="xl"
 				variant={isOptionSelected ? 'positive' : 'secondary'}
 				onClick={onClick}
 				disabled={!isOptionSelected}
 			>
 				<span>{isOptionSelected ? 'Verificar' : 'Seleccione una opción'}</span>
-			</Button>
+			</SubmitButton>
 		</>
 	);
 }

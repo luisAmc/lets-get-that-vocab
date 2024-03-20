@@ -11,6 +11,7 @@ import { Form, useZodForm } from '~/components/shared/Form';
 import { z } from 'zod';
 import { useWatch } from 'react-hook-form';
 import { useNumberQuestionSet } from '../NumberQuestionSetProvider';
+import { formatNumber } from '~/utils/transforms';
 
 const inputNameSchema = z.object({
 	input: z.string().min(1, 'Ingrese el nombre'),
@@ -95,7 +96,9 @@ export function InputNumber({ questionIndex }: InputNameProps) {
 								<XMarkIcon className="h-72 w-72" />
 							)}
 
-							<span className="text-5xl font-bold">{question.answer}</span>
+							<span className="text-5xl font-bold">
+								{formatNumber(question.answer as number)}
+							</span>
 						</motion.div>
 					)}
 				</AnimatePresence>

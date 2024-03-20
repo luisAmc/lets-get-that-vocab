@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
-import { numberToGoyu, numberToHanja } from '~/utils/transforms';
+import { numberToGoyu } from '~/utils/numberToGoyu';
+import { numberToHanja } from '~/utils/numberToHanja';
 
 const NUMBER_TYPES = {
 	'고유어 수': '고유어 수',

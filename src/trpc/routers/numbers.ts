@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
-import { numberToHanja } from '~/utils/transforms';
+import { numberToGoyu, numberToHanja } from '~/utils/transforms';
+
+const NUMBER_TYPES = {
+	'고유어 수': '고유어 수',
+	'한자어 수': '한자어 수',
+};
 
 const RANGES = {
 	'1TO99': '1TO99',
@@ -20,58 +25,104 @@ export const numberRouter = createTRPCRouter({
 		.input(
 			z.object({
 				questionSetSize: z.number(),
+				numberType: z.nativeEnum(NUMBER_TYPES),
 				range: z.nativeEnum(RANGES),
 				questionType: z.nativeEnum(QUESTION_TYPES),
 			}),
 		)
 		.query(async ({ input }) => {
-			let [min, max] = [1, 1];
+			const questions = [];
 
-			if (input.range === RANGES['1TO99']) {
-				[min, max] = [1, 99];
-			} else if (input.range === RANGES['100TO9_999']) {
-				[min, max] = [100, 9_999];
-			} else if (input.range === RANGES['10KTO100M']) {
-				[min, max] = [10_000, 99_999_999];
-			} else if (input.range === RANGES['1TO100M']) {
-				[min, max] = [1, 99_999_999];
+			const numberType = input.numberType;
+
+			if (numberType === NUMBER_TYPES['고유어 수']) {
+				const numbers = generateRandomNumbersInRange(
+					input.questionSetSize,
+					1,
+					99,
+				);
+
+				if (input.questionType === QUESTION_TYPES.INPUT_NAME) {
+					for (const number of numbers) {
+						questions.push({
+							question: number,
+							answer: numberToGoyu(number),
+						});
+					}
+				} else if (input.questionType === QUESTION_TYPES.INPUT_NUMBER) {
+					for (const number of numbers) {
+						questions.push({
+							question: numberToGoyu(number),
+							answer: number,
+						});
+					}
+				} else if (input.questionType === QUESTION_TYPES.BOTH) {
+					for (const number of numbers) {
+						const isInputName = coinFlip();
+
+						if (isInputName) {
+							questions.push({
+								question: number,
+								answer: numberToGoyu(number),
+							});
+						} else {
+							questions.push({
+								question: numberToGoyu(number),
+								answer: number,
+							});
+						}
+					}
+				}
 			}
 
-			const numbers = generateRandomNumbersInRange(
-				input.questionSetSize,
-				min,
-				max,
-			);
+			if (numberType === NUMBER_TYPES['한자어 수']) {
+				let [min, max] = [1, 1];
 
-			const questions = [];
-			if (input.questionType === QUESTION_TYPES.INPUT_NAME) {
-				for (const number of numbers) {
-					questions.push({
-						question: number,
-						answer: numberToHanja(number),
-					});
+				if (input.range === RANGES['1TO99']) {
+					[min, max] = [1, 99];
+				} else if (input.range === RANGES['100TO9_999']) {
+					[min, max] = [100, 9_999];
+				} else if (input.range === RANGES['10KTO100M']) {
+					[min, max] = [10_000, 99_999_999];
+				} else if (input.range === RANGES['1TO100M']) {
+					[min, max] = [1, 99_999_999];
 				}
-			} else if (input.questionType === QUESTION_TYPES.INPUT_NUMBER) {
-				for (const number of numbers) {
-					questions.push({
-						question: numberToHanja(number),
-						answer: number,
-					});
-				}
-			} else if (input.questionType === QUESTION_TYPES.BOTH) {
-				for (const number of numbers) {
-					const isInputName = coinFlip();
 
-					if (isInputName) {
+				const numbers = generateRandomNumbersInRange(
+					input.questionSetSize,
+					min,
+					max,
+				);
+
+				if (input.questionType === QUESTION_TYPES.INPUT_NAME) {
+					for (const number of numbers) {
 						questions.push({
 							question: number,
 							answer: numberToHanja(number),
 						});
-					} else {
+					}
+				} else if (input.questionType === QUESTION_TYPES.INPUT_NUMBER) {
+					for (const number of numbers) {
 						questions.push({
 							question: numberToHanja(number),
 							answer: number,
 						});
+					}
+				} else if (input.questionType === QUESTION_TYPES.BOTH) {
+					for (const number of numbers) {
+						const isInputName = coinFlip();
+
+						if (isInputName) {
+							questions.push({
+								question: number,
+								answer: numberToHanja(number),
+							});
+						} else {
+							questions.push({
+								question: numberToHanja(number),
+								answer: number,
+							});
+						}
 					}
 				}
 			}

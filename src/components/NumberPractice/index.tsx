@@ -14,17 +14,22 @@ type QUERY_INPUT = RouterInputs['number']['getQuestionSet'];
 
 export function NumberPractice() {
 	const router = useRouter();
-	const [questionSetSize, range, questionType] = [
+	const [questionSetSize, numberType, range, questionType] = [
 		Number(router.query.questionSetSize as string),
+		router.query.numberType as unknown as QUERY_INPUT['numberType'],
 		router.query.range as unknown as QUERY_INPUT['range'],
 		router.query.questionType as unknown as QUERY_INPUT['questionType'],
 	];
 
 	const { data, isLoading } = api.number.getQuestionSet.useQuery(
-		{ questionSetSize, range, questionType },
+		{ questionSetSize, numberType, range, questionType },
 		{
 			enabled:
-				!!router.isReady && !!questionSetSize && !!range && !!questionType,
+				!!router.isReady &&
+				!!questionSetSize &&
+				!!numberType &&
+				!!range &&
+				!!questionType,
 			refetchOnWindowFocus: false,
 		},
 	);

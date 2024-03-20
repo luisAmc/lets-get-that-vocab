@@ -72,3 +72,48 @@ function splitArrayInFours<T>(array: Array<T>) {
 
 	return result;
 }
+
+const GOYU_BASE = [
+	'하나',
+	'둘',
+	'셋',
+	'넷',
+	'다섯',
+	'여섯',
+	'일곱',
+	'여덟',
+	'아홉',
+];
+
+const GOYU_TENS = [
+	'열',
+	'스물',
+	'서른',
+	'마흔',
+	'쉰',
+	'예순',
+	'일흔',
+	'여든',
+	'아흔',
+];
+
+export function numberToGoyu(number: number) {
+	const safeNumber = number;
+
+	if (safeNumber < 10) {
+		return GOYU_BASE[safeNumber - 1];
+	} else {
+		// Ex) 15 => {firstDigit: 1, secondDigit: 5}
+		const firstDigit = Math.floor((safeNumber / 10) % 10);
+		const secondDigit = safeNumber % 10;
+
+		console.log({ number, firstDigit, secondDigit });
+
+		// When the number is a multiple of 10
+		if (secondDigit === 0) {
+			return GOYU_TENS[firstDigit - 1];
+		}
+
+		return `${GOYU_TENS[firstDigit - 1]}${GOYU_BASE[secondDigit - 1]}`;
+	}
+}

@@ -27,6 +27,8 @@ export function InputName({ questionIndex }: InputNameProps) {
 		getQuestionByIndex,
 		answerQuestion,
 		goToNextQuestion,
+		playCorrectSfx,
+		playIncorrectSfx,
 	} = useNumberQuestionSet();
 
 	const question = getQuestionByIndex(questionIndex);
@@ -38,6 +40,12 @@ export function InputName({ questionIndex }: InputNameProps) {
 	const [showAnswer, setShowAnswer] = useState(false);
 
 	function handleVerifyClick() {
+		if (isAnswer) {
+			playCorrectSfx();
+		} else {
+			playIncorrectSfx();
+		}
+
 		setShowAnswer(true);
 	}
 

@@ -6,9 +6,25 @@ import {
 } from '@heroicons/react/24/outline';
 import { cn } from '~/utils/cn';
 import { useNumberQuestionSet } from './NumberQuestionSetProvider';
+import { useEffect } from 'react';
 
 export function NumberResume() {
-	const { questions, answers } = useNumberQuestionSet();
+	const {
+		questions,
+		correctAnswersCount,
+		incorrectAnswersCount,
+		answers,
+		playWellDoneSfx,
+		playKeepStudyingSfx,
+	} = useNumberQuestionSet();
+
+	useEffect(() => {
+		if (correctAnswersCount >= incorrectAnswersCount) {
+			playWellDoneSfx();
+		} else {
+			playKeepStudyingSfx();
+		}
+	}, []);
 
 	return (
 		<div className="flex h-full flex-col gap-y-4 rounded-xl border border-brand-200 bg-white p-4">

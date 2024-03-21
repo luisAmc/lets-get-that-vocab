@@ -1,9 +1,5 @@
-import {
-	type ReactNode,
-	createContext,
-	useState,
-	useContext,
-} from 'react';
+import { type ReactNode, createContext, useState, useContext } from 'react';
+import useSound from 'use-sound';
 import { RouterOutputs } from '~/utils/api';
 
 type NumberQuestionType = RouterOutputs['number']['getQuestionSet'][number];
@@ -24,6 +20,11 @@ interface NumberQuestionSetContextType {
 	answerQuestion(isCorrect: boolean): void;
 
 	goToNextQuestion(): void;
+
+	playCorrectSfx(): void;
+	playIncorrectSfx(): void;
+	playWellDoneSfx(): void;
+	playKeepStudyingSfx(): void;
 }
 
 const NumberQuestionSetContext = createContext<
@@ -39,6 +40,11 @@ export function NumberQuestionSetProvider({
 	questions,
 	children,
 }: NumberQuestionSetProviderProps) {
+	const [playCorrectSfx] = useSound('/sounds/correct.mp3');
+	const [playIncorrectSfx] = useSound('/sounds/incorrect.mp3');
+	const [playWellDoneSfx] = useSound('/sounds/well-done.mp3', {volume: 0.6});
+	const [playKeepStudyingSfx] = useSound('/sounds/keep-studying.mp3', {volume: 0.6});
+
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
 	const [answers, setAnswers] = useState(new Array(questions.length).fill(-1));
@@ -79,6 +85,11 @@ export function NumberQuestionSetProvider({
 						setCurrentQuestionIndex((currentIndex) => currentIndex + 1);
 					}
 				},
+
+				playCorrectSfx,
+				playIncorrectSfx,
+				playWellDoneSfx,
+				playKeepStudyingSfx,
 			}}
 		>
 			{children}
